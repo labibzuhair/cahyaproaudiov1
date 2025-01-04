@@ -1,0 +1,13 @@
+[90m= [39m[34;4mApp\Models\Rentals[39;24m {#6186
+    [34mid[39m: [35m1[39m,
+    [34mtransaction_id[39m: [35m1[39m,
+    [34mproduk_id[39m: [35m1[39m,
+    [34mrental_date[39m: "[32m2023-01-01[39m",
+    [34mreturn_date[39m: "[32m2023-01-02[39m",
+    [34mlocation[39m: "[32mJakarta[39m",
+    [34mprice[39m: "[32m2000000.00[39m",
+    [34mquantity[39m: [35m1[39m,
+    [34mcreated_at[39m: "[32m2025-01-03 09:51:38[39m",
+    [34mupdated_at[39m: "[32m2025-01-03 09:51:38[39m",
+  }
+

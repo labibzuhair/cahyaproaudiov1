@@ -1,0 +1,12 @@
+[90m= [39m[34;4mApp\Models\Transactions[39;24m {#6186
+    [34mid[39m: [35m1[39m,
+    [34muser_id[39m: [35m1[39m,
+    [34morder_name[39m: "[32mJohn Doe[39m",
+    [34morder_whatsapp[39m: "[32m08123456789[39m",
+    [34minstallation_address[39m: "[32mJl. Merdeka No. 1, Jakarta[39m",
+    [34mtotal_amount[39m: "[32m2000000.00[39m",
+    [34mstatus[39m: "[32mcompleted[39m",
+    [34mcreated_at[39m: "[32m2025-01-03 09:51:38[39m",
+    [34mupdated_at[39m: "[32m2025-01-03 09:51:38[39m",
+  }
+
