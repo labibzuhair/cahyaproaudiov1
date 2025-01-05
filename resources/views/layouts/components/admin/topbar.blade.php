@@ -139,8 +139,8 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle"
-                                            src="{{ asset('img/undraw_profile_3.svg') }}" alt="...">
+                                        <img class="rounded-circle" src="{{ asset('img/undraw_profile_3.svg') }}"
+                                            alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>

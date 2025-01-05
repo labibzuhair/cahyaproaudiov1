@@ -17,6 +17,11 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ asset('css/auth.css') }}" rel="stylesheet" />
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+
+
+
 
 </head>
 

@@ -6,20 +6,27 @@ use Illuminate\Http\Request;
 use App\Models\Transactions;
 use App\Models\Rentals;
 use App\Models\produk;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class TransactionsController extends Controller
 {
     public function index()
     {
-        $transactions = Transactions::with(['user', 'rentals.produk'])->get();
-        return view('layouts.main.transaksi.transaksi', compact('transactions'));
+        $user = Auth::user();
+        $data['getRecord'] = User::find($user->id);
+        $query = Transactions::with(['user', 'rentals.produk']);
+        $data['transactions'] = $query->get();
+        return view('layouts.admin.transaksi.transaksi', $data);
     }
 
     public function create()
     {
-        $produks = Produk::all();
-        return view('layouts.main.transaksi.create', compact('produks'));
+        $user = Auth::user();
+        $data['getRecord'] = User::find($user->id);
+        $data['produks'] = Produk::all();
+        return view('layouts.admin.transaksi.create', $data);
     }
 
     public function store(Request $request)
@@ -34,7 +41,7 @@ class TransactionsController extends Controller
             'status' => 'required|in:pending,completed,cancelled',
         ]);
 
-        // Buat transaksi baru 
+        // Buat transaksi baru
         $transaction = Transactions::create([
             'user_id' => auth()->id(),
             'order_name' => $request->order_name,
@@ -44,7 +51,7 @@ class TransactionsController extends Controller
             'status' => $request->status,
         ]);
 
-        // Tambahkan rental items ke transaksi 
+        // Tambahkan rental items ke transaksi
         $totalAmount = 0;
         foreach ($request->products as $product) {
             $produk = Produk::find($product['produk_id']);
@@ -62,11 +69,11 @@ class TransactionsController extends Controller
             }
         }
 
-        // Perbarui total_amount pada transaksi 
+        // Perbarui total_amount pada transaksi
         $transaction->total_amount = $totalAmount;
         $transaction->save();
 
-        return redirect()->route('transactions.index');
+        return redirect()->route('admin.transactions.index');
     }
 
     public function show(string $id)

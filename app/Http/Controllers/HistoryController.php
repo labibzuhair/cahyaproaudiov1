@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Rentals;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HistoryController extends Controller
 {
@@ -12,8 +14,12 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        $rentals = Rentals::with(['transaction.user', 'produk'])->get();
-        return view('layouts.main.history.history', compact('rentals'));
+
+        $user = Auth::user();
+        $data['getRecord'] = User::find($user->id);
+        $query = Rentals::with(['transaction.user', 'produk']);
+        $data['rentals'] = $query->get();
+        return view('layouts.admin.history.history', $data);
     }
 
     /**

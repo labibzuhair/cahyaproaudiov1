@@ -36,66 +36,6 @@
     @include('layouts.components.main.footer')
 
 
-    <script>
-        function changeImage(src, id) {
-            document.getElementById('main-image-' + id).src = src;
-            var thumbnails = document.querySelectorAll('#buyNowModal-' + id + ' .thumbnail');
-            thumbnails.forEach(function(thumbnail) {
-                thumbnail.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
-
-
-        function changeImage(src, id, photoId) {
-        document.getElementById('activeImage-' + id).src = src;
-
-        // Hapus kelas 'active' dari semua thumbnail
-        var thumbnails = document.querySelectorAll('#buyNowModal-' + id + ' .thumbnail');
-        thumbnails.forEach(function(thumbnail) {
-            thumbnail.classList.remove('active');
-        });
-
-        // Tambahkan kelas 'active' pada thumbnail yang diklik
-        document.getElementById('thumbnail-' + id + '-' + photoId).classList.add('active');
-    }
-
-    // search and filter produk branda
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('search');
-        const filterType = document.getElementById('filterType');
-        const productContainer = document.getElementById('productContainer');
-        const products = Array.from(productContainer.getElementsByClassName('product'));
-
-        searchInput.addEventListener('input', function() {
-            filterProducts();
-        });
-
-        filterType.addEventListener('change', function() {
-            filterProducts();
-        });
-
-        function filterProducts() {
-            const searchValue = searchInput.value.toLowerCase();
-            const typeValue = filterType.value;
-
-            products.forEach(function(product) {
-                const name = product.getAttribute('data-name').toLowerCase();
-                const type = product.getAttribute('data-type');
-
-                const matchesSearch = name.includes(searchValue);
-                const matchesType = !typeValue || type === typeValue;
-
-                if (matchesSearch && matchesType) {
-                    product.style.display = '';
-                } else {
-                    product.style.display = 'none';
-                }
-            });
-        }
-    });
-    </script>
-
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

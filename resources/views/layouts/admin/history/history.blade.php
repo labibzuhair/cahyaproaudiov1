@@ -1,4 +1,4 @@
-@extends('layouts.main.master.master')
+@extends('layouts.admin.master.master')
 
 
 @section('title', 'History')

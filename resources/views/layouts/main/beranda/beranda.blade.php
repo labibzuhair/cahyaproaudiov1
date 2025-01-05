@@ -173,7 +173,7 @@
                     <div class="modal fade" id="buyNowModal-{{ $produk->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="buyNowModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header bg-black">
+                                <div class="modal-header modal-bg">
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">

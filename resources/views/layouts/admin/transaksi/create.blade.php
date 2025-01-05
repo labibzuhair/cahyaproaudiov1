@@ -1,4 +1,4 @@
-@extends('layouts.main.master.master')
+@extends('layouts.admin.master.master')
 
 
 @section('title', 'Tambah Pesanan')
@@ -7,7 +7,7 @@
 
     <div class="container mt-5">
         <h1 class="mb-4">Form Pesanan</h1>
-        <form action="{{ route('transactions.store') }}" method="POST">
+        <form action="{{ route('admin.transactions.store') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="order_name">Nama Pemesan</label>

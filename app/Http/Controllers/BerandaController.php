@@ -40,6 +40,8 @@ class BerandaController extends Controller
             return view('layouts.owner.beranda.beranda', $data);
         } elseif ($user->is_role == 'customer') {
             return view('layouts.main.beranda.beranda', $data);
+        } else {
+            return view('layouts.main.beranda.beranda', $data);
         }
 
     }
