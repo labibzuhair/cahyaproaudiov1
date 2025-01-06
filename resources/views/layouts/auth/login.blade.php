@@ -22,12 +22,12 @@
                     <label for="password">Password</label>
                     <input class="form-styling" type="password" name="password" placeholder="" />
                     <input type="checkbox" id="checkbox" name="remember" /> <label for="checkbox"><span
-                            class="ui"></span>Keep me signed in</label>
+                            class="ui"></span>Tetap masuk ke akun saya</label>
                     <button type="submit" class="btn btn-primary btn-signup">Login</button>
                 </form>
 
                 <div class="forgot">
-                    <a href="{{ url('forgot') }}">Forgot your password?</a>
+                    <a href="{{ url('forgot') }}">Lupa Password?</a>
                     <a href="{{ route('home') }}">Kembali ke Beranda</a>
                 </div>
             </div>

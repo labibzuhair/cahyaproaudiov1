@@ -44,7 +44,10 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/admin/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
     Route::get('/admin/transactions/create', [TransactionsController::class, 'create'])->name('transactions.create');
     Route::post('/admin/transactions', [TransactionsController::class, 'store'])->name('transactions.store');
-
+    Route::get('/admin/transactions/{id}', [TransactionsController::class, 'show'])->name('transactions.show');
+    Route::get('/admin/transactions/{id}/edit', [TransactionsController::class, 'edit'])->name('transactions.edit');
+    Route::put('/admin/transactions/{id}', [TransactionsController::class, 'update'])->name('transactions.update');
+    Route::delete('/admin/transactions/{id}', [TransactionsController::class, 'destroy'])->name('transactions.destroy');
 
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
 });

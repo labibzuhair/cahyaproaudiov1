@@ -16,7 +16,7 @@
                             href="{{ url('/customer/beranda#services') }}">Pelayanan</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/customer/beranda#portfolio') }}">Produk</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/customer/beranda#contact') }}">Contact</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/customer/beranda#contact') }}">kontak</a>
                     </li>
                     @auth
                         <li class="nav-item"><a class="nav-link" href="{{ url('transactions') }}">Transaksi</a></li>

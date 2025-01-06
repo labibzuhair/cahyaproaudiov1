@@ -21,18 +21,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <style>
-        .foto-produk {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .foto-produk img {
-            width: 100px;
-            height: auto;
-        }
-    </style>
+    <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
 
 
 </head>
@@ -76,14 +65,14 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Siap Untuk Keluar?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-body">Pilih "Logout" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                         <a class="btn btn-primary" href="{{ url('logout') }}">Logout</a>
                     </div>
                 </div>
@@ -99,6 +88,7 @@
 
         <!-- Custom scripts for all pages-->
         <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+        <script src="{{ asset('js/admin-script.js') }}"></script>
 
         <!-- Page level plugins -->
         <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>

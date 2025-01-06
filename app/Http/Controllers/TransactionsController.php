@@ -11,15 +11,19 @@ use Illuminate\Support\Facades\Auth;
 
 
 class TransactionsController extends Controller
-{
+{   
     public function index()
     {
         $user = Auth::user();
         $data['getRecord'] = User::find($user->id);
         $query = Transactions::with(['user', 'rentals.produk']);
         $data['transactions'] = $query->get();
+        $query = Rentals::with(['transaction.user', 'produk']);
+        $data['rentals'] = $query->get();
         return view('layouts.admin.transaksi.transaksi', $data);
     }
+
+
 
     public function create()
     {
@@ -76,14 +80,16 @@ class TransactionsController extends Controller
         return redirect()->route('admin.transactions.index');
     }
 
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $transaction = Transactions::with(['user', 'rentals.produk'])->findOrFail($id);
+        return view('layouts.admin.transaksi.show', compact('transaction'));
     }
 
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $transaction = Transactions::findOrFail($id);
+        return view('layouts.admin.transaksi.edit', compact('transaction'));
     }
 
     public function update(Request $request, string $id)
@@ -91,8 +97,10 @@ class TransactionsController extends Controller
         //
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $transaction = Transactions::findOrFail($id);
+        $transaction->delete();
+        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dihapus');
     }
 }
