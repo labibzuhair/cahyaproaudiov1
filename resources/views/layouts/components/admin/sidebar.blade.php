@@ -33,6 +33,11 @@
             <i class="fa-solid fa-boxes-stacked"></i>
             <span>Semua Produk</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.districts.index') }}">
+            <i class="fa-solid fa-truck-fast"></i>
+            <span>Transport</span></a>
+    </li>
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">

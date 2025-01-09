@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,6 +13,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('district_id')->constrained('districts');
             $table->string('order_name');
             $table->string('order_whatsapp');
             $table->text('installation_address');
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->enum('status', ['pending', 'completed', 'cancelled']);
             $table->timestamps();
         });
-           
     }
 
     /**

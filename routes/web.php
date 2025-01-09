@@ -6,13 +6,14 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\DistrictController;
 
 
 // Route::get('/', function () {
 //     return view('layouts/auth/login');
 // });
 
-Route::get('/', [BerandaController::class, 'index'])->name('home');
+Route::get('/', [BerandaController::class, 'beranda'])->name('beranda');
 
 Route::get('/registration', [AuthController::class, 'registration']);
 Route::post('/registration_post', [AuthController::class, 'registration_post'])->name('registration_post');
@@ -41,6 +42,12 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::put('/admin/produks/{produk}', [ProdukController::class, 'update'])->name('produks.update');
     Route::delete('/admin/produks/{produk}', [ProdukController::class, 'destroy'])->name('produks.destroy');
 
+    Route::get('/admin/districts/search', [DistrictController::class, 'search'])->name('districts.search');
+    Route::get('/admin/districts', [DistrictController::class, 'index'])->name('districts.index');
+    Route::post('/admin/districts', [DistrictController::class, 'store'])->name('districts.store');
+    Route::put('/admin/districts/{id}', [DistrictController::class, 'update'])->name('districts.update');
+
+
     Route::get('/admin/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
     Route::get('/admin/transactions/create', [TransactionsController::class, 'create'])->name('transactions.create');
     Route::post('/admin/transactions', [TransactionsController::class, 'store'])->name('transactions.store');
@@ -61,12 +68,8 @@ Route::group(['middleware' => 'owner', 'name' => 'owner'], function () {
 
 // Grup rute untuk customer
 Route::group(['middleware' => 'customer', 'name' => 'customer'], function () {
-    Route::get('/customer/beranda', [BerandaController::class, 'beranda'])->name('customer/beranda');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
 
-
-    // Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
-    // Route::get('/transactions/create', [TransactionsController::class, 'create'])->name('transactions.create');
-    // Route::post('/transactions', [TransactionsController::class, 'store'])->name('transactions.store');
-
-    // Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
 });

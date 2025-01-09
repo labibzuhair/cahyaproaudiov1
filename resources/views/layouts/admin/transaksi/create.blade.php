@@ -6,7 +6,7 @@
 @section('content')
 
     <div class="container mt-5">
-        <h1 class="mb-4">Form Pesanan</h1>
+        <h1 class="mb-4">Form Pemesanan</h1>
         <form action="{{ route('admin.transactions.store') }}" method="POST">
             @csrf
             <div class="form-group">
@@ -18,7 +18,15 @@
                 <input type="text" class="form-control" id="order_whatsapp" name="order_whatsapp" required>
             </div>
             <div class="form-group">
-                <label for="installation_address">Alamat Pemasangan Alat</label>
+                <label for="district_id">Kecamatan</label>
+                <select class="form-control" id="district_id" name="district_id" required>
+                    <option selected disabled>Pilih Kecamatan</option>
+                    @foreach ($districts as $district)
+                        <option value="{{ $district->id }}">{{ $district->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group"> <label for="installation_address">Alamat Lengkap Pemasangan Alat</label>
                 <textarea class="form-control" id="installation_address" name="installation_address" required></textarea>
             </div>
 
@@ -33,22 +41,26 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="quantity">Jumlah</label>
-                        <input type="number" class="form-control" name="products[0][quantity]" required>
-                    </div>
                 </div>
             </div>
             <button type="button" class="btn btn-secondary mb-3" onclick="addProduct()">Tambah Produk</button>
+
+            <!-- Input Tanggal Rental dan Jumlah Hari Rental -->
+            <div class="form-group">
+                <label for="rental_date">Tanggal Rental</label>
+                <input type="date" class="form-control" id="rental_date" name="rental_date" required>
+            </div>
+            <div class="form-group">
+                <label for="rental_days">Jumlah Hari Rental</label>
+                <input type="number" class="form-control" id="rental_days" name="rental_days" required min="1">
+            </div>
 
             <div class="form-group">
                 <label for="status">Status</label>
                 <select class="form-control" id="status" name="status" required>
                     <option value="pending">Pending</option>
-                    <option value="diproses">Diproses</option>
-                    <option value="berhasil">Berhasil</option>
-                    <option value="selesai">Selesai</option>
-                    <option value="dibatalkan">Dibatalkan</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -69,12 +81,9 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="quantity">Jumlah</label>
-                    <input type="number" class="form-control" name="products[${productGroupCount}][quantity]" required>
-                </div>
             `;
             document.getElementById('products').appendChild(newProductGroup);
         }
     </script>
+
 @endsection

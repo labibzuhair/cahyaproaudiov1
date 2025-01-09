@@ -11,7 +11,7 @@ class Rentals extends Model
 {
     /** @use HasFactory<\Database\Factories\RentalsFactory> */
     use HasFactory;
-    protected $fillable = ['transactions_id', 'produk_id', 'rental_date', 'return_date', 'location', 'price', 'quantity'];
+    protected $fillable = ['transactions_id', 'produk_id', 'rental_date', 'return_date', 'rental_days', 'location', 'delivery_fee'];
 
     public function transaction()
     {

@@ -14,13 +14,14 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('transactions_id')->constrained('transactions');
             $table->foreignId('produk_id')->constrained('produks');
-            $table->date('rental_date');
-            $table->date('return_date');
+            $table->date('rental_date');  // Tanggal rental ditentukan oleh user
+            $table->date('return_date');  // Tanggal pengembalian diisi otomatis oleh sistem
+            $table->integer('rental_days');  // Jumlah hari rental
             $table->string('location');
-            $table->decimal('price', 10, 2);
-            $table->integer('quantity');
+            $table->decimal('delivery_fee', 10, 2);  // Ongkir
             $table->timestamps();
         });
+
 
     }
 

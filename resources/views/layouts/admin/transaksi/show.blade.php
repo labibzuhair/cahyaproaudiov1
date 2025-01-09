@@ -15,8 +15,10 @@
             <thead>
                 <tr>
                     <th>Nama Produk</th>
-                    <th>Jumlah</th>
-                    <th>Harga</th>
+                    <th>Jumlah Hari Rental</th>
+                    <th>Harga Per Hari</th>
+                    <th>Total Harga</th>
+                    <th>Ongkir</th>
                     <th>Lokasi</th>
                     <th>Tanggal Penyewaan</th>
                     <th>Tanggal Pengembalian</th>
@@ -26,8 +28,10 @@
                 @foreach ($transaction->rentals as $rental)
                     <tr>
                         <td>{{ $rental->produk->name }}</td>
-                        <td>{{ $rental->quantity }}</td>
-                        <td>Rp {{ number_format($rental->price, 0, ',', '.') }}</td>
+                        <td>{{ $rental->rental_days }}</td>
+                        <td>Rp {{ number_format($rental->produk->price, 0, ',', '.') }}</td>
+                        <td>Rp {{ number_format($rental->produk->price * $rental->rental_days, 0, ',', '.') }}</td>
+                        <td>Rp {{ number_format($rental->delivery_fee, 0, ',', '.') }}</td>
                         <td>{{ $rental->location }}</td>
                         <td>{{ \Carbon\Carbon::parse($rental->rental_date)->format('d-m-Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($rental->return_date)->format('d-m-Y') }}</td>

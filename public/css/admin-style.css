@@ -8,3 +8,8 @@
     width: 100px;
     height: auto;
 }
+
+/* search in transport */
+.hidden {
+    display: none;
+}

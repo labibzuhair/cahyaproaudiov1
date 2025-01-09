@@ -54,7 +54,7 @@ class AuthController extends Controller
             } else if (Auth::User()->is_role == 'owner') {
                 return redirect()->intended('owner/beranda');
             } else if (Auth::User()->is_role == 'customer') {
-                return redirect()->intended('customer/beranda');
+                return redirect()->intended('/');
             } else {
                 return redirect('login')->with('error', 'Please enter the correct credentials');
             }

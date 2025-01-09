@@ -183,7 +183,7 @@
                                         </div>
                                         <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#buyNowModal-{{ $produk->id }}">Sewa Sekarang</button>
+                                                data-bs-target="#buyNowModal-{{ $produk->id }}">Lihat </button>
                                         </div>
                                     </div>
                                 </div>

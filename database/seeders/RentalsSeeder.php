@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Rentals;
+use App\Models\Transactions;
+use App\Models\produk;
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 
 class RentalsSeeder extends Seeder
@@ -14,23 +17,19 @@ class RentalsSeeder extends Seeder
      */
     public function run()
     {
-        Rentals::create([ 
-            'transactions_id' => 1, 
-            'produk_id' => 1, 
-            'rental_date' => '2023-01-01', 
-            'return_date' => '2023-01-02', 
-            'location' => 'Jakarta', 
-            'price' => 2000000, 
-            'quantity' => 1 
-        ]); 
-        Rentals::create([ 
-            'transactions_id' => 2, 
-            'produk_id' => 2, 
-            'rental_date' => '2023-01-05', 
-            'return_date' => '2023-01-06', 
-            'location' => 'Bandung', 
-            'price' => 5000000, 
-            'quantity' => 1 
+        $transaction = Transactions::first();
+        $produk = Produk::first();
+        $rental_date = Carbon::now();
+        $rental_days = 3;
+        $return_date = $rental_date->copy()->addDays($rental_days - 1);
+        Rentals::create([
+            'transactions_id' => $transaction->id,
+            'produk_id' => $produk->id,
+            'rental_date' => $rental_date,
+            'return_date' => $return_date,
+            'rental_days' => $rental_days,
+            'location' => 'Jl. Contoh No. 123',
+            'delivery_fee' => 200000,
         ]);
     }
 }
