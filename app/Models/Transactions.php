@@ -13,7 +13,15 @@ class Transactions extends Model
     /** @use HasFactory<\Database\Factories\TransactionsFactory> */
     use HasFactory;
     use HasFactory;
-    protected $fillable = ['user_id', 'order_name', 'order_whatsapp', 'installation_address', 'district_id', 'total_amount', 'status'];
+    protected $fillable = [
+        'user_id',
+        'order_name',
+        'order_whatsapp',
+        'installation_address',
+        'district_id',
+        'total_amount',
+        'status'
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

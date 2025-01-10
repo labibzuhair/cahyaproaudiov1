@@ -20,6 +20,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 
+    <style>
+        .added-to-cart {
+            border: 2px solid green;
+            /* Ganti dengan gaya yang diinginkan */
+            background-color: #e8f5e9;
+        }
+    </style>
+
 
 
 
@@ -34,6 +42,164 @@
         @yield('content')
     </main>
     @include('layouts.components.main.footer')
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function setupAddToCartButtons() {
+                $('.add-to-cart-btn').off('click').on('click', function(e) {
+                    e.preventDefault();
+
+                    var produkId = $(this).data('id');
+                    var form = $('#add-to-cart-form-' + produkId);
+                    var url = form.attr('action');
+                    var token = $('input[name=_token]', form).val();
+
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            _token: token,
+                            produk_id: produkId
+                        },
+                        success: function(response) {
+                            var btn = $('#add-to-cart-form-' + produkId + ' .add-to-cart-btn');
+                            btn.removeClass('btn-primary add-to-cart-btn').addClass(
+                                'btn-danger remove-from-cart-btn').text(
+                                'Hapus dari Keranjang');
+                            btn.attr('data-id', produkId);
+                            btn.off('click').on('click', function(e) {
+                                e.preventDefault();
+                                removeFromCart(produkId);
+                            });
+
+                            console.log(response.message);
+                        },
+                        error: function(xhr) {
+                            console.log(xhr.responseText);
+                            alert('Terjadi kesalahan, produk gagal ditambahkan ke keranjang.');
+                        }
+                    });
+                });
+            }
+
+            function setupRemoveFromCartButtons() {
+                $('.remove-from-cart-btn').off('click').on('click', function(e) {
+                    e.preventDefault();
+
+                    var produkId = $(this).data('id');
+                    var form = $(this).closest('form');
+                    var url = form.attr('action');
+                    var token = $('input[name=_token]', form).val();
+
+                    $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            _token: token,
+                        },
+                        success: function(response) {
+                            var btn = $('#add-to-cart-form-' + produkId +
+                                ' .remove-from-cart-btn');
+                            btn.removeClass('btn-danger remove-from-cart-btn').addClass(
+                                'btn-primary add-to-cart-btn').text('Tambah ke Keranjang');
+                            btn.attr('data-id', produkId);
+                            btn.off('click').on('click', function(e) {
+                                e.preventDefault();
+                                addToCart(produkId);
+                            });
+
+                            if ($('#remove-from-cart-form-' + produkId).closest('tr').length) {
+                                $('#remove-from-cart-form-' + produkId).closest('tr').remove();
+                            }
+
+                            console.log(response.message);
+                        },
+                        error: function(xhr) {
+                            console.log(xhr.responseText);
+                            alert('Terjadi kesalahan, produk gagal dihapus dari keranjang.');
+                        }
+                    });
+                });
+            }
+
+            function addToCart(produkId) {
+                var form = $('#add-to-cart-form-' + produkId);
+                var url = form.attr('action');
+                var token = $('input[name=_token]', form).val();
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {
+                        _token: token,
+                        produk_id: produkId
+                    },
+                    success: function(response) {
+                        var btn = $('#add-to-cart-form-' + produkId + ' .add-to-cart-btn');
+                        btn.removeClass('btn-primary add-to-cart-btn').addClass(
+                            'btn-danger remove-from-cart-btn').text('Hapus dari Keranjang');
+                        btn.attr('data-id', produkId);
+                        btn.off('click').on('click', function(e) {
+                            e.preventDefault();
+                            removeFromCart(produkId);
+                        });
+
+                        console.log(response.message);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                        alert('Terjadi kesalahan, produk gagal ditambahkan ke keranjang.');
+                    }
+                });
+            }
+
+            function removeFromCart(produkId) {
+                var form = $('#add-to-cart-form-' + produkId);
+                var url = "{{ route('customer.cart.remove', '') }}/" + produkId;
+                var token = $('input[name=_token]', form).val();
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {
+                        _token: token,
+                    },
+                    success: function(response) {
+                        var btn = $('#add-to-cart-form-' + produkId + ' .remove-from-cart-btn');
+                        btn.removeClass('btn-danger remove-from-cart-btn').addClass(
+                            'btn-primary add-to-cart-btn').text('Tambah ke Keranjang');
+                        btn.attr('data-id', produkId);
+                        btn.off('click').on('click', function(e) {
+                            e.preventDefault();
+                            addToCart(produkId);
+                        });
+
+                        if ($('#remove-from-cart-form-' + produkId).closest('tr').length) {
+                            $('#remove-from-cart-form-' + produkId).closest('tr').remove();
+                        }
+
+                        console.log(response.message);
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                        alert('Terjadi kesalahan, produk gagal dihapus dari keranjang.');
+                    }
+                });
+            }
+
+            setupAddToCartButtons();
+            setupRemoveFromCartButtons();
+        });
+    </script>
+
+
+
+
+
+
 
 
 

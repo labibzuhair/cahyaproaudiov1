@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\produk;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,10 @@ class BerandaController extends Controller
         // Apply search and filter
         $query = Produk::query();
         $data['produks'] = $query->get();
+
+        // Ambil produk yang ada di keranjang untuk user yang sedang login
+        $cartItems = CartItem::where('user_id', $user->id)->pluck('produk_id')->toArray();
+        $data['cartItems'] = $cartItems;
 
         if ($user) {
             $data['getRecord'] = User::find($user->id);

@@ -10,16 +10,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/customer/beranda') }}">Beranda</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Beranda</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link"
-                            href="{{ url('/customer/beranda#services') }}">Pelayanan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/customer/beranda#portfolio') }}">Produk</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/#services') }}">Pelayanan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/#portfolio') }}">Produk</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/customer/beranda#contact') }}">kontak</a>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('/#contact') }}">kontak</a>
                     </li>
                     @auth
-                        <li class="nav-item"><a class="nav-link" href="{{ url('transactions') }}">Transaksi</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('customer.cart.index') }}">Keranjang</a>
+                        </li>
                         <li class="nav-item"><a class="nav-link" href="{{ url('history') }}">History</a></li>
                         <a class="btn btn-danger" href="{{ url('logout') }}" role="button">Logout</a>
                     @else

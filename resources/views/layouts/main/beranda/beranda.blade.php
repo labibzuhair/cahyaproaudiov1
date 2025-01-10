@@ -92,7 +92,8 @@
                     </div>
                     <div class="row g-1" id="productContainer">
                         @foreach ($produks as $produk)
-                            <div class="col-md-4 product" data-type="{{ $produk->type }}" data-name="{{ $produk->name }}">
+                            <div class="col-md-4 product" data-type="{{ $produk->type }}" data-name="{{ $produk->name }}"
+                                id="product-{{ $produk->id }}">
                                 <div class="p-card">
                                     <div class="p-carousel">
                                         <div id="carousel-{{ $produk->id }}" class="carousel slide"
@@ -161,36 +162,64 @@
                                     </div>
                                     <div class="p-details">
                                         <div class="d-flex justify-content-between align-items-center mx-2">
-                                            <h5>{{ $produk->name }}</h5><span>Rp
-                                                {{ number_format($produk->price, 0, ',', '.') }}</span>
+                                            <h5>{{ $produk->name }}</h5>
+                                            <span>Rp {{ number_format($produk->price, 0, ',', '.') }}</span>
                                         </div>
                                         <div class="mx-2">
                                             <hr class="line">
                                         </div>
                                         <div class="d-flex justify-content-between mt-2 spec mx-2">
                                             <div class="d-flex flex-column align-items-center">
-                                                <h6 class="mb-0">TYPE</h6><span>{{ $produk->type }}</span>
+                                                <h6 class="mb-0">TYPE</h6>
+                                                <span>{{ $produk->type }}</span>
                                             </div>
                                             <div class="d-flex flex-column align-items-center">
-                                                <h6 class="mb-0">Jumlah Unit</h6><span>{{ $produk->stock }}</span>
+                                                <h6 class="mb-0">Jumlah Unit</h6>
+                                                <span>{{ $produk->stock }}</span>
                                             </div>
                                             <div class="d-flex flex-column align-items-center">
                                                 <h6 class="mb-0">DESCRIPTION</h6>
-                                                <span>
-                                                    {{ Str::limit($produk->description, 30, '...') }}
-                                                </span>
+                                                <span>{{ Str::limit($produk->description, 30, '...') }}</span>
                                             </div>
                                         </div>
-                                        <div class="buy mt-3"><button class="btn btn-primary btn-block" type="button"
+                                        <div class="buy mt-3">
+                                            @if (in_array($produk->id, $cartItems))
+                                                <!-- Tombol Hapus dari Keranjang -->
+                                                <form id="add-to-cart-form-{{ $produk->id }}"
+                                                    action="{{ route('customer.cart.remove', $produk->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-block remove-from-cart-btn"
+                                                        type="button" data-id="{{ $produk->id }}"
+                                                        onclick="removeFromCart({{ $produk->id }})">Hapus dari
+                                                        Keranjang</button>
+                                                </form>
+                                            @else
+                                                <!-- Tombol Tambah ke Keranjang -->
+                                                <form id="add-to-cart-form-{{ $produk->id }}"
+                                                    action="{{ route('customer.cart.add', $produk->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-primary btn-block add-to-cart-btn"
+                                                        type="button" data-id="{{ $produk->id }}"
+                                                        onclick="addToCart({{ $produk->id }})">Tambah ke
+                                                        Keranjang</button>
+                                                </form>
+                                            @endif
+                                            <button class="btn btn-secondary btn-block" type="button"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#buyNowModal-{{ $produk->id }}">Lihat </button>
+                                                data-bs-target="#buyNowModal-{{ $produk->id }}">Lihat</button>
                                         </div>
+
+
+
+
                                     </div>
                                 </div>
                             </div>
 
 
-                            <!-- Modal -->
+                            <!-- Modal Detail Produk -->
                             <div class="modal fade" id="buyNowModal-{{ $produk->id }}" data-bs-backdrop="static"
                                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="buyNowModalLabel"
                                 aria-hidden="true">
@@ -260,9 +289,34 @@
                                                             <span class="intro-2">{{ $produk->description }}</span>
                                                         </div>
                                                         <div class="mt-4 mb-5">
-                                                            <button class="btn btn-primary">Form Penyewaan<i
-                                                                    class="fa fa-long-arrow-right"></i></button>
+                                                            @if (in_array($produk->id, $cartItems))
+                                                                <!-- Tombol Hapus dari Keranjang -->
+                                                                <form id="add-to-cart-form-{{ $produk->id }}"
+                                                                    action="{{ route('customer.cart.remove', $produk->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <button class="btn btn-danger remove-from-cart-btn"
+                                                                        type="button" data-id="{{ $produk->id }}"
+                                                                        onclick="removeFromCart({{ $produk->id }})">Hapus
+                                                                        dari Keranjang</button>
+                                                                </form>
+                                                            @else
+                                                                <!-- Tombol Tambah ke Keranjang -->
+                                                                <form id="add-to-cart-form-{{ $produk->id }}"
+                                                                    action="{{ route('customer.cart.add', $produk->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <button class="btn btn-primary add-to-cart-btn"
+                                                                        type="button" data-id="{{ $produk->id }}"
+                                                                        onclick="addToCart({{ $produk->id }})">Tambah ke
+                                                                        Keranjang</button>
+                                                                </form>
+                                                            @endif
+                                                            <button type="button" class="btn btn-secondary mt-2"
+                                                                data-bs-dismiss="modal">Tutup</button>
                                                         </div>
+
+
                                                     </div>
                                                 </div>
                                             </div>

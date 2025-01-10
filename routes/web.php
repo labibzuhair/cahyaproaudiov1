@@ -2,11 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\BerandaController;
-use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\TransactionsController;
 
 
 // Route::get('/', function () {
@@ -67,9 +69,13 @@ Route::group(['middleware' => 'owner', 'name' => 'owner'], function () {
 });
 
 // Grup rute untuk customer
-Route::group(['middleware' => 'customer', 'name' => 'customer'], function () {
+Route::group(['middleware' => 'customer', 'as' => 'customer.'], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-    Route::post('/orders/store', [OrderController::class, 'store'])->name('orders.store');
+    Route::post('/cart/add/{produkId}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/remove/{produkId}', [CartController::class, 'remove'])->name('cart.remove');
 
+
+    // Rute untuk checkout
+    Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout.create');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 });
