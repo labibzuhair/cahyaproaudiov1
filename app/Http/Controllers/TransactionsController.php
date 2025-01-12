@@ -25,6 +25,14 @@ class TransactionsController extends Controller
         return view('layouts.admin.transaksi.transaksi', $data);
     }
 
+    public function indexCustomer()
+    {
+        $user = Auth::user();
+        $transactions = Transactions::where('user_id', $user->id)->with('rentals.produk')->get();
+        return view('layouts.main.transaksi.transaksi', compact('transactions'));
+
+    }
+
     public function create()
     {
         $user = Auth::user();

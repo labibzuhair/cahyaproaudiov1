@@ -73,9 +73,12 @@ Route::group(['middleware' => 'customer', 'as' => 'customer.'], function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{produkId}', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/remove/{produkId}', [CartController::class, 'remove'])->name('cart.remove');
-
+    Route::get('/cart/recommendations', [CartController::class, 'generateCartResponse'])->name('cart.recommendations');
 
     // Rute untuk checkout
     Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout.create');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/transactions', [TransactionsController::class, 'indexCustomer'])->name('transactions.index'); // Menambahkan rute untuk halaman transaksi
+
+
 });

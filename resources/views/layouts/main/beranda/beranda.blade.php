@@ -183,42 +183,35 @@
                                             </div>
                                         </div>
                                         <div class="buy mt-3">
-                                            @if (in_array($produk->id, $cartItems))
-                                                <!-- Tombol Hapus dari Keranjang -->
-                                                <form id="add-to-cart-form-{{ $produk->id }}"
-                                                    action="{{ route('customer.cart.remove', $produk->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-danger btn-block remove-from-cart-btn"
-                                                        type="button" data-id="{{ $produk->id }}"
-                                                        onclick="removeFromCart({{ $produk->id }})">Hapus dari
-                                                        Keranjang</button>
-                                                </form>
-                                            @else
-                                                <!-- Tombol Tambah ke Keranjang -->
-                                                <form id="add-to-cart-form-{{ $produk->id }}"
-                                                    action="{{ route('customer.cart.add', $produk->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-primary btn-block add-to-cart-btn"
-                                                        type="button" data-id="{{ $produk->id }}"
-                                                        onclick="addToCart({{ $produk->id }})">Tambah ke
-                                                        Keranjang</button>
-                                                </form>
-                                            @endif
+                                            @auth
+                                                @if (in_array($produk->id, $cartItems))
+                                                    <!-- Tombol Hapus dari Keranjang -->
+                                                    <form id="add-to-cart-form-{{ $produk->id }}"
+                                                        action="{{ route('customer.cart.remove', $produk->id) }}"
+                                                        method="POST"> @csrf <button
+                                                            class="btn btn-danger btn-block remove-from-cart-btn"
+                                                            type="button" data-id="{{ $produk->id }}"
+                                                            onclick="removeFromCart({{ $produk->id }})">Hapus dari
+                                                            Keranjang</button> </form>
+                                                @else
+                                                    <!-- Tombol Tambah ke Keranjang -->
+                                                    <form id="add-to-cart-form-{{ $produk->id }}"
+                                                        action="{{ route('customer.cart.add', $produk->id) }}"
+                                                        method="POST"> @csrf <button
+                                                            class="btn btn-primary btn-block add-to-cart-btn" type="button"
+                                                            data-id="{{ $produk->id }}"
+                                                            onclick="addToCart({{ $produk->id }})">Tambah ke
+                                                            Keranjang</button> </form>
+                                                @endif
+
+                                            @endauth
                                             <button class="btn btn-secondary btn-block" type="button"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#buyNowModal-{{ $produk->id }}">Lihat</button>
                                         </div>
-
-
-
-
                                     </div>
                                 </div>
                             </div>
-
-
                             <!-- Modal Detail Produk -->
                             <div class="modal fade" id="buyNowModal-{{ $produk->id }}" data-bs-backdrop="static"
                                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="buyNowModalLabel"
@@ -289,29 +282,31 @@
                                                             <span class="intro-2">{{ $produk->description }}</span>
                                                         </div>
                                                         <div class="mt-4 mb-5">
-                                                            @if (in_array($produk->id, $cartItems))
-                                                                <!-- Tombol Hapus dari Keranjang -->
-                                                                <form id="add-to-cart-form-{{ $produk->id }}"
-                                                                    action="{{ route('customer.cart.remove', $produk->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    <button class="btn btn-danger remove-from-cart-btn"
-                                                                        type="button" data-id="{{ $produk->id }}"
-                                                                        onclick="removeFromCart({{ $produk->id }})">Hapus
-                                                                        dari Keranjang</button>
-                                                                </form>
-                                                            @else
-                                                                <!-- Tombol Tambah ke Keranjang -->
-                                                                <form id="add-to-cart-form-{{ $produk->id }}"
-                                                                    action="{{ route('customer.cart.add', $produk->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    <button class="btn btn-primary add-to-cart-btn"
-                                                                        type="button" data-id="{{ $produk->id }}"
-                                                                        onclick="addToCart({{ $produk->id }})">Tambah ke
-                                                                        Keranjang</button>
-                                                                </form>
-                                                            @endif
+                                                            @auth
+                                                                @if (in_array($produk->id, $cartItems))
+                                                                    <!-- Tombol Hapus dari Keranjang -->
+                                                                    <form id="add-to-cart-form-{{ $produk->id }}"
+                                                                        action="{{ route('customer.cart.remove', $produk->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <button class="btn btn-danger remove-from-cart-btn"
+                                                                            type="button" data-id="{{ $produk->id }}"
+                                                                            onclick="removeFromCart({{ $produk->id }})">Hapus
+                                                                            dari Keranjang</button>
+                                                                    </form>
+                                                                @else
+                                                                    <!-- Tombol Tambah ke Keranjang -->
+                                                                    <form id="add-to-cart-form-{{ $produk->id }}"
+                                                                        action="{{ route('customer.cart.add', $produk->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <button class="btn btn-primary add-to-cart-btn"
+                                                                            type="button" data-id="{{ $produk->id }}"
+                                                                            onclick="addToCart({{ $produk->id }})">Tambah
+                                                                            ke Keranjang</button>
+                                                                    </form>
+                                                                @endif
+                                                            @endauth
                                                             <button type="button" class="btn btn-secondary mt-2"
                                                                 data-bs-dismiss="modal">Tutup</button>
                                                         </div>

@@ -34,11 +34,10 @@ class BerandaController extends Controller
         $query = Produk::query();
         $data['produks'] = $query->get();
 
-        // Ambil produk yang ada di keranjang untuk user yang sedang login
-        $cartItems = CartItem::where('user_id', $user->id)->pluck('produk_id')->toArray();
-        $data['cartItems'] = $cartItems;
-
         if ($user) {
+            // Ambil produk yang ada di keranjang untuk user yang sedang login
+            $cartItems = CartItem::where('user_id', $user->id)->pluck('produk_id')->toArray();
+            $data['cartItems'] = $cartItems;
             $data['getRecord'] = User::find($user->id);
 
             if ($user->is_role == 'admin') {
