@@ -21,7 +21,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('customer.cart.index') }}">Keranjang</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url('history') }}">History</a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                href="{{ route('customer.transactions.index') }}">Transaksi</a></li>
                         <a class="btn btn-danger" href="{{ url('logout') }}" role="button">Logout</a>
                     @else
                         <a class="btn btn-primary" href="{{ url('login') }}" role="button">Login</a>

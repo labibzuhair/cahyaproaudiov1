@@ -8,6 +8,7 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
 
 
@@ -78,7 +79,11 @@ Route::group(['middleware' => 'customer', 'as' => 'customer.'], function () {
     // Rute untuk checkout
     Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout.create');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-    Route::get('/transactions', [TransactionsController::class, 'indexCustomer'])->name('transactions.index'); // Menambahkan rute untuk halaman transaksi
-
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/{id}', [TransactionController::class, 'show'])->name('transactions.show');
+    Route::get('/transactions/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
+    Route::put('/transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
+    Route::delete('/transactions/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
 
 });
+
