@@ -78,12 +78,13 @@ class TransactionController extends Controller
         ]);
 
         try {
-            // Perbarui transaksi
+            // Perbarui transaksi dengan status 'menunggu'
             $transaction->update([
                 'order_name' => $request->order_name,
                 'order_whatsapp' => $request->order_whatsapp,
                 'district_id' => $request->district_id,
                 'installation_address' => $request->installation_address,
+                'status' => 'menunggu',
             ]);
 
             // Hapus rental items yang ada
@@ -116,21 +117,21 @@ class TransactionController extends Controller
             $transaction->total_amount = $totalAmount;
             $transaction->save();
 
-            return redirect()->route('customer.transactions.index')->with('success', 'Transaksi berhasil diperbarui.');
+            return redirect()->route('customer.transactions.index')->with('success', 'Perubahan berhasil diajukan. Menunggu konfirmasi dari admin.');
         } catch (Exception $e) {
             return back()->withInput()->withErrors(['msg' => 'Terjadi kesalahan saat memperbarui transaksi. Silakan coba lagi.']);
         }
     }
 
 
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function requestDelete($id)
     {
         $transaction = Transactions::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-        $transaction->delete();
-        return redirect()->route('customer.transactions.index')->with('success', 'Transaksi berhasil dihapus.');
+        $transaction->status = 'menunggu';
+        $transaction->save();
+        return redirect()->route('customer.transactions.index')->with('success', 'Permintaan penghapusan transaksi berhasil diajukan. Menunggu konfirmasi admin.');
     }
 }

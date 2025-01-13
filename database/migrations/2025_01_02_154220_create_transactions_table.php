@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('order_whatsapp');
             $table->text('installation_address');
             $table->decimal('total_amount', 10, 2);
-            $table->enum('status', ['pending', 'completed', 'cancelled']);
+            $table->enum('status', ['menunggu', 'diproses', 'selesai', 'dibatalkan']);
             $table->timestamps();
         });
     }

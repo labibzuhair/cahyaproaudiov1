@@ -83,7 +83,8 @@ Route::group(['middleware' => 'customer', 'as' => 'customer.'], function () {
     Route::get('/transactions/{id}', [TransactionController::class, 'show'])->name('transactions.show');
     Route::get('/transactions/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
     Route::put('/transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
-    Route::delete('/transactions/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+    Route::post('/transactions/{id}/request-delete', [TransactionController::class, 'requestDelete'])->name('transactions.request-delete');
+
 
 });
 

@@ -72,10 +72,13 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <select class="form-control" id="status" name="status" required>
-                    <option value="pending" {{ $transaction->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                    <option value="completed" {{ $transaction->status == 'completed' ? 'selected' : '' }}>Completed
+                    <option value="menunggu" {{ $transaction->status == 'menunggu' ? 'selected' : '' }}>Menunggu
                     </option>
-                    <option value="cancelled" {{ $transaction->status == 'cancelled' ? 'selected' : '' }}>Cancelled
+                    <option value="diproses" {{ $transaction->status == 'diproses' ? 'selected' : '' }}>Diproses
+                    </option>
+                    <option value="selesai" {{ $transaction->status == 'selesai' ? 'selected' : '' }}>Selesai
+                    </option>
+                    <option value="dibatalkan" {{ $transaction->status == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan
                     </option>
                 </select>
             </div>

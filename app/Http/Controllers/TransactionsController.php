@@ -109,10 +109,26 @@ class TransactionsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate(['order_name' => 'required|string|max:255', 'order_whatsapp' => 'required|string|max:15', 'district_id' => 'required|exists:districts,id', 'installation_address' => 'required|string', 'rental_date' => 'required|date', 'rental_days' => 'required|integer|min:1', 'products' => 'required|array', 'products.*.produk_id' => 'required|exists:produks,id', 'status' => 'required|in:pending,completed,cancelled',]);
+        $request->validate([
+            'order_name' => 'required|string|max:255',
+            'order_whatsapp' => 'required|string|max:15',
+            'district_id' => 'required|exists:districts,id',
+            'installation_address' => 'required|string',
+            'rental_date' => 'required|date',
+            'rental_days' => 'required|integer|min:1',
+            'products' => 'required|array',
+            'products.*.produk_id' => 'required|exists:produks,id',
+            'status' => 'required|in:pending,completed,cancelled',
+        ]);
         // Update transaksi
         $transaction = Transactions::findOrFail($id);
-        $transaction->update(['order_name' => $request->order_name, 'order_whatsapp' => $request->order_whatsapp, 'installation_address' => $request->installation_address, 'district_id' => $request->district_id, 'status' => $request->status,]);
+        $transaction->update([
+            'order_name' => $request->order_name,
+            'order_whatsapp' => $request->order_whatsapp,
+            'installation_address' => $request->installation_address,
+            'district_id' => $request->district_id,
+            'status' => $request->status,
+        ]);
         // Hapus rentals lama
         Rentals::where('transactions_id', $transaction->id)->delete();
         // Ambil ongkir berdasarkan kecamatan
@@ -126,7 +142,15 @@ class TransactionsController extends Controller
         foreach ($request->products as $product) {
             $produk = Produk::find($product['produk_id']);
             if ($produk) {
-                $rental = Rentals::create(['transactions_id' => $transaction->id, 'produk_id' => $product['produk_id'], 'rental_date' => $rental_date, 'return_date' => $return_date, 'rental_days' => $rental_days, 'location' => $request->installation_address, 'delivery_fee' => $delivery_fee,]);
+                $rental = Rentals::create([
+                    'transactions_id' => $transaction->id,
+                    'produk_id' => $product['produk_id'],
+                    'rental_date' => $rental_date,
+                    'return_date' => $return_date,
+                    'rental_days' => $rental_days,
+                    'location' => $request->installation_address,
+                    'delivery_fee' => $delivery_fee,
+                ]);
                 $totalAmount += ($produk->price * $rental_days);
             }
         }

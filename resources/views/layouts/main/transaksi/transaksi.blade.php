@@ -43,12 +43,11 @@
                                         class="btn btn-warning btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <form action="{{ route('customer.transactions.destroy', $transaction->id) }}"
+                                    <form action="{{ route('customer.transactions.request-delete', $transaction->id) }}"
                                         method="POST" style="display:inline;">
                                         @csrf
-                                        @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')">
+                                            onclick="return confirm('Apakah Anda yakin ingin mengajukan permintaan penghapusan transaksi ini?')">
                                             <i class="fa-solid fa-trash-can"></i>
                                         </button>
                                     </form>
