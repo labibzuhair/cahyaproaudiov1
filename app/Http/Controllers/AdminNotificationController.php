@@ -16,8 +16,14 @@ class AdminNotificationController extends Controller
      */
     public function index()
     {
+        // $notifications = Auth::user()->notifications;
         $notifications = Auth::user()->notifications;
-        return view('admin.notifications.index', compact('notifications'));
+        $user = Auth::user();
+        $data = [
+            'notifications' => $notifications,
+            'getRecord' => User::find($user->id)
+        ];
+        return view('layouts.admin.notifications.index', $data);
     }
     public function markAsRead($id)
     {

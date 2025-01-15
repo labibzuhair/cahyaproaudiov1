@@ -104,23 +104,25 @@
                         </tbody>
                     </table>
                     <div class="mt-4">
-                        <form action="{{ route('admin.transactions.approve_all', $transaction->id) }}" method="POST"
-                            style="display:inline;">
-                            @csrf
-                            @method('POST')
-                            <button type="submit" class="btn btn-success">Setujui Semua</button>
-                        </form>
-                        <form action="{{ route('admin.transactions.reject_all', $transaction->id) }}" method="POST"
-                            style="display:inline;">
-                            @csrf
-                            @method('POST')
-                            <button type="submit" class="btn btn-danger">Tolak Semua</button>
-                        </form>
+                        @if ($transaction->status === 'menunggu')
+                            <form action="{{ route('admin.transactions.approve_all', $transaction->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-success">Setujui Semua</button>
+                            </form>
+                            <form action="{{ route('admin.transactions.reject_all', $transaction->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-danger">Tolak Semua</button>
+                            </form>
+                        @endif
+                    </div>
                 @endif
             </div>
-        </div>
 
-        {{-- <div class="card">
+            {{-- <div class="card">
             <div class="card-header">
                 Produk yang Disewa
             </div>
@@ -156,5 +158,5 @@
                 <a href="{{ route('admin.transactions.index') }}" class="btn btn-primary">Kembali</a>
             </div>
         </div> --}}
-    </div>
-@endsection
+        </div>
+    @endsection

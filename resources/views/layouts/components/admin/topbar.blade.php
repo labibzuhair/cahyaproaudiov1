@@ -64,7 +64,7 @@
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
-                                @foreach (auth()->user()->notifications as $notification)
+                                @foreach (auth()->user()->notifications->take(5) as $notification)
                                     <a class="dropdown-item d-flex align-items-center {{ $notification->read_at ? 'read' : 'unread' }}"
                                         href="{{ route('admin.notifications.show', $notification->id) }}"
                                         onclick="markAsRead('{{ $notification->id }}')">
@@ -83,6 +83,7 @@
                                 <a class="dropdown-item text-center small text-gray-500"
                                     href="{{ route('admin.notifications.index') }}">Show All Alerts</a>
                             </div>
+
                         </li>
 
 

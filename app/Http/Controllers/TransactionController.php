@@ -55,7 +55,7 @@ class TransactionController extends Controller
         $transaction = Transactions::with('user', 'district')->findOrFail($id);
         $changes = TransactionChanges::where('transaction_id', $id)->get();
 
-        return view('admin.transactions.show', compact('transaction', 'changes'));
+        return view('layouts.main.transaksi.show', compact('transaction', 'changes'));
     }
 
 
@@ -207,7 +207,6 @@ class TransactionController extends Controller
                         'location' => $transaction->installation_address,
                         'delivery_fee' => $transaction->district ? $transaction->district->delivery_fee : 0,
                     ]);
-
                 } elseif ($change->field === 'produk_id_removed') {
                     Log::info("Removing product with ID: {$change->old_value}");
 
@@ -218,9 +217,6 @@ class TransactionController extends Controller
                     Log::info("Updating transaction field: {$change->field} with new value: {$change->new_value}");
                     $transaction->update([$change->field => $change->new_value]);
                 }
-
-                Log::info("Deleting change ID: {$change->id}");
-                $change->delete();
             }
 
             // Hitung ulang total amount
@@ -253,12 +249,6 @@ class TransactionController extends Controller
 
         try {
             $transaction = Transactions::findOrFail($id);
-            $changes = TransactionChanges::where('transaction_id', $id)->get();
-
-            foreach ($changes as $change) {
-                Log::info("Deleting change ID: {$change->id}");
-                $change->delete();
-            }
 
             Log::info("Updating transaction status to 'ditolak' for transaction ID: $id");
             $transaction->update(['status' => 'ditolak']);
@@ -269,6 +259,7 @@ class TransactionController extends Controller
             return redirect()->back()->withErrors(['msg' => 'Terjadi kesalahan saat menolak semua perubahan. Silakan coba lagi.']);
         }
     }
+
 
     /**
      * Remove the specified resource from storage.

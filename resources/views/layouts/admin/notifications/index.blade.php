@@ -11,7 +11,8 @@
             <ul class="list-group">
                 @foreach ($notifications as $notification)
                     <li class="list-group-item">
-                        <div class="d-flex align-items-center">
+                        <a href="{{ route('admin.notifications.show', $notification->id) }}"
+                            class="d-flex align-items-center {{ $notification->read_at ? 'read' : 'unread' }}">
                             <div class="mr-3">
                                 <div class="icon-circle bg-warning">
                                     <i class="fas fa-exclamation-triangle text-white"></i>
@@ -21,7 +22,7 @@
                                 <div class="small text-gray-500">{{ $notification->created_at->format('d-m-Y') }}</div>
                                 <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
                             </div>
-                        </div>
+                        </a>
                     </li>
                 @endforeach
             </ul>

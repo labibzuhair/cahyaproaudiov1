@@ -95,6 +95,9 @@ class CheckoutController extends Controller
             $transaction->total_amount = $totalAmount;
             $transaction->save();
 
+            // Hapus keranjang setelah transaksi berhasil
+            CartItem::where('user_id', $user->id)->delete();
+
             // Kirim notifikasi ke admin
             $admin = User::where('is_role', 'admin')->get();
             foreach ($admin as $a) {
@@ -107,7 +110,6 @@ class CheckoutController extends Controller
             return back()->withInput()->withErrors(['msg' => 'Terjadi kesalahan saat membuat transaksi. Silakan coba lagi.']);
         }
     }
-
     /**
      * Display the specified resource.
      */
