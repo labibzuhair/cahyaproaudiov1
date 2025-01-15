@@ -25,7 +25,7 @@ class TransactionsController extends Controller
         $data['transactions'] = $query->get();
         $query = Rentals::with(['transaction.user', 'produk']);
         $data['rentals'] = $query->get();
-        return view('layouts.admin.transaksi.transaksi', $data);
+        return view('layouts.admin.transaksi.index', $data);
     }
 
     public function create()
@@ -98,15 +98,15 @@ class TransactionsController extends Controller
     public function show($id)
     {
         $transaction = Transactions::with(['user', 'rentals.produk', 'district'])->findOrFail($id);
-        $changes = TransactionChanges::where('transaction_id', $id)->get();
-        foreach ($changes as $change) {
-            if ($change->field === 'produk_id') {
-                $change->new_value = Produk::find($change->new_value)->name;
-                $change->old_value = $change->old_value ? Produk::find($change->old_value)->name : 'Tidak Ada';
-            }
-        }
+        // $changes = TransactionChanges::where('transaction_id', $id)->get();
+        // foreach ($changes as $change) {
+        //     if ($change->field === 'produk_id') {
+        //         $change->new_value = Produk::find($change->new_value)->name;
+        //         $change->old_value = $change->old_value ? Produk::find($change->old_value)->name : 'Tidak Ada';
+        //     }
+        // }
 
-        return view('layouts.admin.transaksi.show', compact('transaction', 'changes'));
+        return view('layouts.admin.transaksi.show', compact('transaction'));
     }
 
     public function edit($id)

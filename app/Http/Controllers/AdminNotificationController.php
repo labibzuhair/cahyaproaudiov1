@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Transactions;
 use Illuminate\Http\Request;
+use App\Models\TransactionChanges;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,15 +62,18 @@ class AdminNotificationController extends Controller
 
             // Dapatkan transaksi berdasarkan ID notifikasi
             $transactionId = $notification->data['transaction_id'];
-            $transaction = Transactions::with('user', 'district')->findOrFail($transactionId);
+            $transaction = Transactions::with('user', 'district', 'rentals.produk')->findOrFail($transactionId);
+
+            // Dapatkan perubahan terkait transaksi
+            $changes = TransactionChanges::where('transaction_id', $transactionId)->get();
 
             // Dapatkan semua transaksi dari pengguna yang sama
-            $query = Transactions::where('user_id', $transaction->user_id);
-            $data['transactions'] = $query->get();
-            $user = Auth::user();
-            $data['getRecord'] = User::find($user->id);
+            $data['transactions'] = Transactions::where('user_id', $transaction->user_id)->get();
+            $data['getRecord'] = User::find(Auth::id());
+            $data['transaction'] = $transaction;
+            $data['changes'] = $changes;
 
-            // Tampilkan view dengan transaksi yang sesuai
+            // Tampilkan view dengan transaksi dan perubahan yang sesuai
             return view('layouts.admin.transaksi.transaksi', $data);
         }
 
