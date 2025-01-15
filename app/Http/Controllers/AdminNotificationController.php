@@ -73,11 +73,12 @@ class AdminNotificationController extends Controller
             // Dapatkan perubahan terkait transaksi
             $changes = TransactionChanges::where('transaction_id', $transactionId)->get();
 
-            // Dapatkan semua transaksi dari pengguna yang sama
-            $data['transactions'] = Transactions::where('user_id', $transaction->user_id)->get();
+            // Dapatkan detail pengguna
             $data['getRecord'] = User::find(Auth::id());
             $data['transaction'] = $transaction;
             $data['changes'] = $changes;
+            $data['transactions'] = Transactions::where('user_id', $transaction->user_id)->get();
+
 
             // Tampilkan view dengan transaksi dan perubahan yang sesuai
             return view('layouts.admin.transaksi.transaksi', $data);
