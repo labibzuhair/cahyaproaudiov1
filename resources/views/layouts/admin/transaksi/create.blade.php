@@ -59,6 +59,8 @@
                 <label for="status">Status</label>
                 <select class="form-control" id="status" name="status" required>
                     <option value="menunggu">Menunggu</option>
+                    <option value="disetujui">Disetujui</option>
+                    <option value="ditolak">Ditolak</option>
                     <option value="diproses">Diproses</option>
                     <option value="selesai">Selesai</option>
                     <option value="dibatalkan">Dibatalkan</option>

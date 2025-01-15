@@ -22,12 +22,12 @@
                 @foreach ($transactions as $transaction)
                     <tr>
                         <td>{{ $transaction->id }}</td>
-                        <td>{{ $transaction->user ? $transaction->user->name : 'Tidak Diketahui' }}</td>
+                        <td>{{ optional($transaction->user)->name ?? 'Tidak Diketahui' }}</td>
                         <td>{{ $transaction->order_name }}</td>
                         <td>{{ $transaction->order_whatsapp }}</td>
                         <td>{{ ucfirst($transaction->status) }}</td>
-                        <td>{{ $transaction->district ? $transaction->district->name : 'Tidak Diketahui' }}</td>
-                        <td>{{ \Carbon\Carbon::parse($transaction->created_at)->format('d-m-Y') }}</td>
+                        <td>{{ optional($transaction->district)->name ?? 'Tidak Diketahui' }}</td>
+                        <td>{{ $transaction->created_at->format('d-m-Y') }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                 <a href="{{ route('admin.transactions.show', $transaction->id) }}"
@@ -38,8 +38,7 @@
                                     class="btn btn-warning btn-sm">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <form action="{{ route('admin.transactions.destroy', $transaction->id) }}" method="POST"
-                                    style="display:inline;">
+                                <form action="{{ route('admin.transactions.destroy', $transaction->id) }}" method="POST" novalidate style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm"

@@ -23,6 +23,15 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
 
+    <style>
+        .read {
+            background-color: #f8f9fa;
+        }
+
+        .unread {
+            background-color: #ffffff;
+        }
+    </style>
 
 </head>
 
@@ -79,6 +88,41 @@
             </div>
         </div>
 
+        <script>
+            // NOTIFICATION
+            function markAllAsRead() {
+                fetch('/admin/notifications/mark-all-as-read', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        document.querySelectorAll('.unread').forEach(notification => {
+                            notification.classList.remove('unread');
+                            notification.classList.add('read');
+                        });
+                        document.querySelector('.badge-counter').style.display = 'none';
+                    }
+                });
+            }
+
+            function markAsRead(notificationId) {
+                fetch(`/admin/notifications/${notificationId}/read`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        document.querySelector(`[href$="${notificationId}"]`).classList.remove('unread');
+                        document.querySelector(`[href$="${notificationId}"]`).classList.add('read');
+                    }
+                });
+            }
+        </script>
 
 
         <!-- Bootstrap core JavaScript-->

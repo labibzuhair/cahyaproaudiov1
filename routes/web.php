@@ -10,6 +10,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\AdminNotificationController;
 
 
 // Route::get('/', function () {
@@ -58,6 +59,16 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/admin/transactions/{id}/edit', [TransactionsController::class, 'edit'])->name('transactions.edit');
     Route::put('/admin/transactions/{id}', [TransactionsController::class, 'update'])->name('transactions.update');
     Route::delete('/admin/transactions/{id}', [TransactionsController::class, 'destroy'])->name('transactions.destroy');
+
+    Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::get('/notifications/{id}', [AdminNotificationController::class, 'show'])->name('notifications.show');
+
+    Route::post('/transactions/approve_all/{id}', [TransactionController::class, 'approveAll'])->name('transactions.approve_all');
+    Route::post('/transactions/reject_all/{id}', [TransactionController::class, 'rejectAll'])->name('transactions.reject_all');
+
+
+
 
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
 });
