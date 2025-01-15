@@ -29,7 +29,7 @@
         }
 
         .unread {
-            background-color: #ffffff;
+            background-color: #c8c8c8;
         }
     </style>
 
