@@ -11840,3 +11840,9 @@ body {
 .thumbnail.active .overlay {
     opacity: 0;
 }
+
+.added-to-cart {
+    border: 2px solid green;
+    /* Ganti dengan gaya yang diinginkan */
+    background-color: #e8f5e9;
+}

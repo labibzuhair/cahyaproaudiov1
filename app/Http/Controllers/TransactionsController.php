@@ -28,6 +28,24 @@ class TransactionsController extends Controller
         return view('layouts.admin.transaksi.index', $data);
     }
 
+    public function showByStatus($status)
+    {
+        // Ambil semua transaksi dengan status yang diberikan
+        $transactions = Transactions::where('status', $status)->with('user', 'district', 'rentals.produk')->get();
+        $user = Auth::user();
+
+        // Siapkan data untuk dikirim ke view
+        $data = [
+            'getRecord' => $user,
+            'transactions' => $transactions,
+            'status' => $status
+        ];
+
+        return view('layouts.admin.transaksi.byStatus', $data);
+    }
+
+
+
     public function create()
     {
         $user = Auth::user();

@@ -50,8 +50,13 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Semua Transaksi</h6>
                 <a class="collapse-item" href="{{ route('admin.transactions.index') }}">Semua Transaksi</a>
-                <a class="collapse-item" href="cards.html">Transaksi di Proses</a>
-                <a class="collapse-item" href="cards.html">Transaksi Sukses</a>
+                <a class="collapse-item" href="{{ route('admin.transactions.byStatus', 'menunggu') }}">Transaksi Menunggu</a>
+                <a class="collapse-item" href="{{ route('admin.transactions.byStatus', 'disetujui') }}">Transaksi Disetujui</a>
+                <a class="collapse-item" href="{{ route('admin.transactions.byStatus', 'ditolak') }}">Transaksi Ditolak</a>
+                <a class="collapse-item" href="{{ route('admin.transactions.byStatus', 'diproses') }}">Transaksi Diproses</a>
+                <a class="collapse-item" href="{{ route('admin.transactions.byStatus', 'selesai') }}">Transaksi Selesai</a>
+                <a class="collapse-item" href="{{ route('admin.transactions.byStatus', 'dibatalkan') }}">Transaksi Dibatalkan</a>
+
                 <a class="collapse-item" href="{{ route('admin.transactions.create') }}">Tambah Pesanan</a>
             </div>
         </div>

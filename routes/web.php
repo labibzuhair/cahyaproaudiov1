@@ -53,6 +53,7 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.'], function () {
 
 
     Route::get('/admin/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/{status}', [TransactionsController::class, 'showByStatus'])->name('transactions.byStatus');
     Route::get('/admin/transactions/create', [TransactionsController::class, 'create'])->name('transactions.create');
     Route::post('/admin/transactions', [TransactionsController::class, 'store'])->name('transactions.store');
     Route::get('/admin/transactions/{id}', [TransactionsController::class, 'show'])->name('transactions.show');
