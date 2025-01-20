@@ -19,7 +19,7 @@ use App\Http\Controllers\AdminNotificationController;
 
 Route::get('/', [BerandaController::class, 'beranda'])->name('beranda');
 
-Route::get('/registration', [AuthController::class, 'registration']);
+Route::get('/registration', [AuthController::class, 'registration'])->name('registration');
 Route::post('/registration_post', [AuthController::class, 'registration_post'])->name('registration_post');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');

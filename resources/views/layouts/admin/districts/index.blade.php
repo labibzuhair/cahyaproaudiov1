@@ -1,6 +1,6 @@
 @extends('layouts.admin.master.master')
 
-@section('title', 'Semua Produk')
+@section('title', 'Kecamatan')
 
 @section('content')
 
@@ -63,27 +63,4 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('search').addEventListener('input', function() {
-            let searchValue = this.value.toLowerCase();
-            let districtRows = document.querySelectorAll('.district-row');
-
-            districtRows.forEach(row => {
-                let districtName = row.querySelector('.district-name').textContent.toLowerCase();
-                if (districtName.includes(searchValue)) {
-                    row.classList.remove('hidden');
-                } else {
-                    row.classList.add('hidden');
-                }
-            });
-        });
-
-        document.getElementById('reset-search').addEventListener('click', function() {
-            document.getElementById('search').value = '';
-            let districtRows = document.querySelectorAll('.district-row');
-            districtRows.forEach(row => {
-                row.classList.remove('hidden');
-            });
-        });
-    </script>
 @endsection

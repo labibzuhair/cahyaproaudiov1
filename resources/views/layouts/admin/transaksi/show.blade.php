@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <title>Detail Transaksi</title>
-</head>
-
-<body>
+@extends('layouts.admin.master.master')
 
 
+@section('title', 'Detail Transaksi')
 
-
+@section('content')
     <div class="container mt-5">
         <h1 class="mb-4">Detail Transaksi</h1>
         <table class="table table-striped">
@@ -45,6 +36,5 @@
         </table>
         <a href="{{ route('admin.transactions.index') }}" class="btn btn-primary">Kembali</a>
     </div>
-</body>
 
-</html>
+    @endsection

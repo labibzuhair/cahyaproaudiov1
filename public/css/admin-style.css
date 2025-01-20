@@ -13,3 +13,12 @@
 .hidden {
     display: none;
 }
+
+/* notifications */
+.read {
+    background-color: #f8f9fa;
+}
+
+.unread {
+    background-color: #c8c8c8;
+}

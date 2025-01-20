@@ -23,15 +23,6 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
 
-    <style>
-        .read {
-            background-color: #f8f9fa;
-        }
-
-        .unread {
-            background-color: #c8c8c8;
-        }
-    </style>
 
 </head>
 
@@ -68,61 +59,9 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Siap Untuk Keluar?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Pilih "Logout" di bawah jika Anda siap mengakhiri sesi Anda saat ini.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                        <a class="btn btn-primary" href="{{ url('logout') }}">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('layouts.components.admin.logoutModal')
 
-        <script>
-            // NOTIFICATION
-            function markAllAsRead() {
-                fetch('/admin/notifications/mark-all-as-read', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        document.querySelectorAll('.unread').forEach(notification => {
-                            notification.classList.remove('unread');
-                            notification.classList.add('read');
-                        });
-                        document.querySelector('.badge-counter').style.display = 'none';
-                    }
-                });
-            }
 
-            function markAsRead(notificationId) {
-                fetch(`/admin/notifications/${notificationId}/read`, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json'
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        document.querySelector(`[href$="${notificationId}"]`).classList.remove('unread');
-                        document.querySelector(`[href$="${notificationId}"]`).classList.add('read');
-                    }
-                });
-            }
-        </script>
 
 
         <!-- Bootstrap core JavaScript-->

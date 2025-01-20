@@ -136,28 +136,5 @@
         </form>
     </div>
 
-    <script>
-        function previewPhoto(input, previewId) {
-            var preview = document.getElementById(previewId);
-            var file = input.files[0];
-            var reader = new FileReader();
 
-            reader.onloadend = function() {
-                preview.src = reader.result;
-                preview.style.display = 'block';
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            } else {
-                preview.src = "";
-                preview.style.display = 'none';
-            }
-        }
-
-        function removePhoto(photoId, previewId) {
-            document.getElementById(previewId).style.display = 'none';
-            document.getElementById('remove_' + photoId).value = "1";
-        }
-    </script>
 @endsection

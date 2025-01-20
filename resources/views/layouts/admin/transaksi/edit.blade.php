@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.admin.master.master')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <title>Edit Transaksi</title>
-</head>
 
-<body>
+@section('title', 'Edit Pesanan')
+
+@section('content')
     <div class="container mt-5">
         <h1 class="mb-4">Edit Transaksi</h1>
 
@@ -134,6 +129,4 @@
             document.getElementById('products').appendChild(newProductGroup);
         }
     </script>
-</body>
-
-</html>
+@endsection

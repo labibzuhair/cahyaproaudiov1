@@ -116,6 +116,8 @@ class TransactionsController extends Controller
     public function show($id)
     {
         $transaction = Transactions::with(['user', 'rentals.produk', 'district'])->findOrFail($id);
+        $user = Auth::user();
+
         // $changes = TransactionChanges::where('transaction_id', $id)->get();
         // foreach ($changes as $change) {
         //     if ($change->field === 'produk_id') {
@@ -124,16 +126,29 @@ class TransactionsController extends Controller
         //     }
         // }
 
-        return view('layouts.admin.transaksi.show', compact('transaction'));
+        $data = [
+            'getRecord' => $user,
+            'transaction' => $transaction,
+
+        ];
+        return view('layouts.admin.transaksi.show', $data);
     }
 
     public function edit($id)
     {
+        $user = Auth::user();
         $transaction = Transactions::with('rentals')->findOrFail($id);
         $produks = Produk::all();
         $districts = District::all();
-        return view('layouts.admin.transaksi.edit', compact('transaction', 'produks', 'districts'));
+        $data = [
+            'getRecord' => $user,
+            'transaction' => $transaction,
+            'produks' => $produks,
+            'districts' => $districts
+        ];
+        return view('layouts.admin.transaksi.edit', $data);
     }
+
 
 
 
