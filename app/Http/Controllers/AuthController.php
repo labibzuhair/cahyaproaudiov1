@@ -15,9 +15,13 @@ use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
-    public function registration()
+    public function registration_user()
     {
         return view('layouts/auth/registration');
+    }
+    public function registration_admin()
+    {
+        return view('layouts/auth/registration_admin');
     }
 
     public function registration_post(Request $request)

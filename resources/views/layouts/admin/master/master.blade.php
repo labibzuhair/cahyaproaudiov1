@@ -23,6 +23,10 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
 
+    <!-- FullCalendar CSS for custom calender-->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+
+
 
 </head>
 
@@ -63,7 +67,8 @@
 
 
 
-
+<!-- FullCalendar JS for custom calender -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
         <!-- Bootstrap core JavaScript-->
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

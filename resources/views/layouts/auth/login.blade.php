@@ -9,7 +9,7 @@
             <div class="nav">
                 <ul class="links">
                     <li class="signin-active"><a class="btn">Sign in</a></li>
-                    <li class="signup-inactive"><a class="btn" href="{{ url('registration') }}">Sign up</a></li>
+                    <li class="signup-inactive"><a class="btn" href="{{ route('registration') }}">Sign up</a></li>
                     <li class="signup-inactive"><a class="btn" href="{{ url('forgot') }}">Forgot</a></li>
                 </ul>
             </div>

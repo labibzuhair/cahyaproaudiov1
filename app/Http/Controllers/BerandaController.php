@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\produk;
+use App\Models\Rentals;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,6 +30,7 @@ class BerandaController extends Controller
         $user = Auth::user();
         $data['produks'] = Produk::all();
         $data['types'] = Produk::select('type')->distinct()->get()->pluck('type');
+        $rentals = Rentals::with('produk', 'transaction.user');
 
         // Apply search and filter
         $query = Produk::query();
@@ -41,6 +43,7 @@ class BerandaController extends Controller
             $data['getRecord'] = User::find($user->id);
 
             if ($user->is_role == 'admin') {
+                $data['rentals'] = $rentals->get();
                 return view('layouts.admin.beranda.beranda', $data);
             } elseif ($user->is_role == 'owner') {
                 return view('layouts.owner.beranda.beranda', $data);

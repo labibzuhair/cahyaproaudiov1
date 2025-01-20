@@ -19,7 +19,7 @@ use App\Http\Controllers\AdminNotificationController;
 
 Route::get('/', [BerandaController::class, 'beranda'])->name('beranda');
 
-Route::get('/registration', [AuthController::class, 'registration'])->name('registration');
+Route::get('/registration', [AuthController::class, 'registration_user'])->name('registration');
 Route::post('/registration_post', [AuthController::class, 'registration_post'])->name('registration_post');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -37,6 +37,8 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 // Grup rute untuk admin
 Route::group(['middleware' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/registration_admin', [AuthController::class, 'registration_admin'])->name('registration_admin');
+
     Route::get('/admin/beranda', [BerandaController::class, 'beranda'])->name('beranda');
 
     Route::get('/admin/produks', [ProdukController::class, 'index'])->name('produks.index');

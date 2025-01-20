@@ -140,38 +140,13 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                        <div class="dropdown no-arrow">
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                aria-labelledby="dropdownMenuLink">
-                                <div class="dropdown-header">Dropdown Header:</div>
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
+                        <h6 class="m-0 font-weight-bold text-primary">Jadwal Pasang Alat</h6>
+
+
                     </div>
                     <!-- Card Body -->
-                    <div class="card-body">
-                        <div class="chart-pie pt-4 pb-2">
-                            <canvas id="myPieChart"></canvas>
-                        </div>
-                        <div class="mt-4 text-center small">
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-primary"></i> Direct
-                            </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-success"></i> Social
-                            </span>
-                            <span class="mr-2">
-                                <i class="fas fa-circle text-info"></i> Referral
-                            </span>
-                        </div>
+                    <div class="container mt-5">
+                        <div id="calendar"></div>
                     </div>
                 </div>
             </div>
@@ -332,4 +307,28 @@
 
     </div>
     <!-- End of Main Content -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: [
+            @foreach ($rentals as $rental)
+            {
+                title: '{{ $rental->transaction->user->name }} - {{ $rental->produk->name }}',
+                start: '{{ $rental->rental_date }}',
+                end: '{{ \Carbon\Carbon::parse($rental->return_date)->addDay()->format('Y-m-d') }}',
+                backgroundColor: '{{ $rental->transaction->user->id % 2 == 0 ? '#28a745' : '#dc3545' }}',
+                borderColor: '{{ $rental->transaction->user->id % 2 == 0 ? '#28a745' : '#dc3545' }}'
+            },
+            @endforeach
+        ]
+    });
+
+    calendar.render();
+});
+</script>
+
 @endsection
