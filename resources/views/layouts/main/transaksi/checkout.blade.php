@@ -3,7 +3,7 @@
 @section('title', 'Checkout')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-top: 70px">
         <h2 class="text-center">Form Pemesanan</h2>
         <form action="{{ route('customer.checkout.store') }}" method="POST" id="checkout-form">
             @csrf

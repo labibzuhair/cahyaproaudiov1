@@ -4,7 +4,7 @@
 @section('title', 'Keranjang')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-top: 70px">
         <h2 class="text-center">Keranjang Belanja</h2>
         <div id="cart-container">
             @if ($cartItems->isEmpty())

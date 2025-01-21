@@ -3,7 +3,7 @@
 @section('title', 'Transaksi Saya')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-top: 70px">
         <h2 class="text-center">Transaksi Saya</h2>
         @if ($transactions->isEmpty())
             <p class="text-center">Anda belum memiliki transaksi.</p>

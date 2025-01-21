@@ -3,7 +3,7 @@
 @section('title', 'Edit Transaksi')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-top: 70px">
         <h2 class="mb-4">Edit Transaksi</h2>
         <form action="{{ route('customer.transactions.update', $transaction->id) }}" method="POST">
             @csrf

@@ -3,7 +3,7 @@
 @section('title', 'Detail Transaksi')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-top: 70px">
         <h2 class="mb-4">Detail Transaksi</h2>
         <table class="table table-striped">
             <thead>

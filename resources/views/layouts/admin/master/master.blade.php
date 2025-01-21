@@ -27,6 +27,34 @@
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
 
 
+<link rel="stylesheet" href="{{ asset('css/calender/style.css') }}">
+
+<style>
+
+
+    .details-container {
+      float: right;
+      width: 30%; /* Sesuaikan lebar sesuai kebutuhan */
+      color: white;
+      padding: 20px;
+      margin-right: 100px;
+    }
+
+    .active-date {
+      background-color: #9370DB; /* Warna ungu */
+      color: white;
+    }
+
+    .rental-date {
+      background-color: #32CD32; /* Warna hijau */
+      color: white;
+    }
+
+    .event-date {
+      border-left: 10px solid #FF1744; /* Warna merah untuk event */
+    }
+  </style>
+
 
 </head>
 
@@ -66,6 +94,10 @@
         @include('layouts.components.admin.logoutModal')
 
 
+        {{-- <script src="{{ asset('js/calender/jquery.min.js') }}"></script> --}}
+        <script src="{{ asset('js/calender/popper.js') }}"></script>
+        <script src="{{ asset('js/calender/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/calender/main.js') }}"></script>
 
 <!-- FullCalendar JS for custom calender -->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>

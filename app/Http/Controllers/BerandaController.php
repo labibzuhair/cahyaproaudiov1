@@ -25,16 +25,15 @@ class BerandaController extends Controller
         return view('layouts.main.beranda.beranda', $data);
     }
 
+
+
     public function beranda()
     {
         $user = Auth::user();
         $data['produks'] = Produk::all();
         $data['types'] = Produk::select('type')->distinct()->get()->pluck('type');
-        $rentals = Rentals::with('produk', 'transaction.user');
-
-        // Apply search and filter
-        $query = Produk::query();
-        $data['produks'] = $query->get();
+        $rentals = Rentals::with('produk', 'transaction.user')->get();
+        $data['rentals'] = $rentals;
 
         if ($user) {
             // Ambil produk yang ada di keranjang untuk user yang sedang login
@@ -43,7 +42,7 @@ class BerandaController extends Controller
             $data['getRecord'] = User::find($user->id);
 
             if ($user->is_role == 'admin') {
-                $data['rentals'] = $rentals->get();
+                $data['rentals'] = $rentals;
                 return view('layouts.admin.beranda.beranda', $data);
             } elseif ($user->is_role == 'owner') {
                 return view('layouts.owner.beranda.beranda', $data);
@@ -54,6 +53,7 @@ class BerandaController extends Controller
             return view('layouts.main.beranda.beranda', $data);
         }
     }
+
 
 
 }

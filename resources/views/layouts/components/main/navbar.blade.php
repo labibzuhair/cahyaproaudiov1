@@ -10,18 +10,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Beranda</a>
+                    <li class="nav-item ">
+                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Beranda</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/#services') }}">Pelayanan</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{ url('/#services') }}">Pelayanan</a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/#portfolio') }}">Produk</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="{{ url('/#contact') }}">kontak</a>
                     </li>
                     @auth
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('customer.cart.index') }}">Keranjang</a>
+                        <li class="nav-item ">
+                            <a class="nav-link {{ request()->is('cart') ? 'active' : '' }}" href="{{ route('customer.cart.index') }}">Keranjang</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link"
+                        <li class="nav-item"><a class="nav-link {{ request()->is('transactions') ? 'active' : '' }}"
                                 href="{{ route('customer.transactions.index') }}">Transaksi</a></li>
                         <a class="btn btn-danger" href="{{ url('logout') }}" role="button">Logout</a>
                     @else

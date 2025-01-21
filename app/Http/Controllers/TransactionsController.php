@@ -17,6 +17,31 @@ use Illuminate\Support\Facades\Log;
 
 class TransactionsController extends Controller
 {
+
+
+
+
+    // Fungsi untuk mendapatkan data transaksi dan mengembalikannya sebagai JSON
+    public function fetchTransactions()
+    {
+        // Mengambil data transaksi beserta relasi rentals dan district
+        $transactions = Transactions::with('rentals', 'district')->get();
+        // Menyiapkan data yang diperlukan untuk dikembalikan sebagai JSON
+        $data = $transactions->map(function ($transaction) {
+            return [
+                'order_name' => $transaction->order_name,
+                'order_whatsapp' => $transaction->order_whatsapp,
+                'installation_address' => $transaction->installation_address,
+                'district' => $transaction->district->name,
+                'total_amount' => $transaction->total_amount,
+                'status' => $transaction->status,
+                'rentals' => $transaction->rentals->map(function ($rental) {
+                    return ['rental_date' => $rental->rental_date, 'return_date' => $rental->return_date,];
+                })
+            ];
+        });
+        return response()->json($data);
+    }
     public function index()
     {
         $user = Auth::user();
@@ -67,9 +92,9 @@ class TransactionsController extends Controller
             'rental_days' => 'required|integer|min:1',
             'products' => 'required|array',
             'products.*.produk_id' => 'required|exists:produks,id',
-            'status' => 'required|in:pending,completed,cancelled',
+            'status' => 'required|in:menunggu, disetujui, ditolak, diproses, selesai, dibatalkan',
         ]);
-
+        // dd
         // Buat transaksi baru
         $transaction = Transactions::create([
             'user_id' => auth()->id(),
