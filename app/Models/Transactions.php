@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\user;
+use App\Models\User;
 use App\Models\Rentals;
 use App\Models\District;
 use Illuminate\Database\Eloquent\Model;

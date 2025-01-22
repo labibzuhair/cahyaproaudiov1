@@ -18,14 +18,14 @@ use Illuminate\Support\Facades\Log;
 class TransactionsController extends Controller
 {
 
-
-
-
     // Fungsi untuk mendapatkan data transaksi dan mengembalikannya sebagai JSON
     public function fetchTransactions()
     {
         // Mengambil data transaksi beserta relasi rentals dan district
-        $transactions = Transactions::with('rentals', 'district')->get();
+        $transactions = Transactions::with('rentals', 'district')
+            ->whereIn('status', ['disetujui', 'diproses', 'selesai'])
+            ->get();
+
         // Menyiapkan data yang diperlukan untuk dikembalikan sebagai JSON
         $data = $transactions->map(function ($transaction) {
             return [
@@ -36,12 +36,24 @@ class TransactionsController extends Controller
                 'total_amount' => $transaction->total_amount,
                 'status' => $transaction->status,
                 'rentals' => $transaction->rentals->map(function ($rental) {
-                    return ['rental_date' => $rental->rental_date, 'return_date' => $rental->return_date,];
+                    return [
+                        'rental_date' => $rental->rental_date,
+                        'return_date' => $rental->return_date,
+                        'order_name' => $rental->transaction->order_name,
+                        'order_whatsapp' => $rental->transaction->order_whatsapp,
+                        'installation_address' => $rental->transaction->installation_address,
+                        'district' => $rental->transaction->district->name,
+                        'total_amount' => $rental->transaction->total_amount,
+                        'status' => $rental->transaction->status,
+                    ];
                 })
             ];
         });
+
         return response()->json($data);
     }
+
+
     public function index()
     {
         $user = Auth::user();

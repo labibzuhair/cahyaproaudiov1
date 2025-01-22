@@ -24,36 +24,103 @@
     <link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
 
     <!-- FullCalendar CSS for custom calender-->
-<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
 
 
-<link rel="stylesheet" href="{{ asset('css/calender/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/calender/style.css') }}">
 
-<style>
+    <style>
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .calendar-container {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .events-container {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .active-date {
+            background-color: #9370DB;
+            /* Warna ungu */
+            color: white;
+        }
+
+        .rental-date-a {
+            background-color: #FF6347;
+            /* Warna A */
+            color: white;
+        }
+
+        .rental-date-b {
+            background-color: #FFD700;
+            /* Warna B */
+            color: white;
+        }
+
+        .rental-date-c {
+            background-color: #32CD32;
+            /* Warna C */
+            color: white;
+        }
+
+        .event-date {
+            border-left: 10px solid #FF1744;
+            /* Warna merah untuk event */
+        }
+
+        .rental-details {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .rental-details th,
+        .rental-details td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .rental-details th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+
+            .calendar-container,
+            .events-container {
+                width: 100%;
+            }
+
+            .events-container {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .calendar-container,
+            .events-container {
+                padding: 10px;
+            }
+
+            .rental-details th,
+            .rental-details td {
+                padding: 5px;
+            }
+        }
+    </style>
 
 
-    .details-container {
-      float: right;
-      width: 30%; /* Sesuaikan lebar sesuai kebutuhan */
-      color: white;
-      padding: 20px;
-      margin-right: 100px;
-    }
-
-    .active-date {
-      background-color: #9370DB; /* Warna ungu */
-      color: white;
-    }
-
-    .rental-date {
-      background-color: #32CD32; /* Warna hijau */
-      color: white;
-    }
-
-    .event-date {
-      border-left: 10px solid #FF1744; /* Warna merah untuk event */
-    }
-  </style>
 
 
 </head>
@@ -93,17 +160,18 @@
 
         @include('layouts.components.admin.logoutModal')
 
+        <!-- FullCalendar JS for custom calender -->
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
 
-        {{-- <script src="{{ asset('js/calender/jquery.min.js') }}"></script> --}}
-        <script src="{{ asset('js/calender/popper.js') }}"></script>
-        <script src="{{ asset('js/calender/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/calender/main.js') }}"></script>
-
-<!-- FullCalendar JS for custom calender -->
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
         <!-- Bootstrap core JavaScript-->
-        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+      <!-- Bootstrap core JavaScript-->
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- Kalender JavaScript -->
+<script src="{{ asset('js/calender/popper.js') }}"></script>
+<script src="{{ asset('js/calender/main.js') }}"></script>
+
 
         <!-- Core plugin JavaScript-->
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>

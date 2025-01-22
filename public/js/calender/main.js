@@ -103,45 +103,58 @@
         load_transactions(); // Periksa transaksi setiap kali tahun berubah
     }
 
-    function show_events(events, month, day) {
+    function show_events(rentals, month, day) {
         $(".events-container").empty();
         $(".events-container").show(250);
-        if (events.length === 0) {
-            var event_card = $("<div class='event-card'></div>");
-            var event_name = $(
-                "<div class='event-name'>There are no events planned for " +
+        if (rentals.length === 0) {
+            var rental_card = $("<div class='event-card'></div>");
+            var rental_name = $(
+                "<div class='event-name'>Tidak ada persewaan yang direncanakan untuk " +
                     month +
                     " " +
                     day +
                     ".</div>"
             );
-            $(event_card).css({ "border-left": "10px solid #FF1744" });
-            $(event_card).append(event_name);
-            $(".events-container").append(event_card);
+            $(rental_card).css({ "border-left": "10px solid #32CD32" });
+            $(rental_card).append(rental_name);
+            $(".events-container").append(rental_card);
         } else {
-            for (var i = 0; i < events.length; i++) {
-                var event_card = $("<div class='event-card'></div>");
-                var event_name = $(
-                    "<div class='event-name'>" +
-                        events[i]["occasion"] +
-                        ":</div>"
+            for (var i = 0; i < rentals.length; i++) {
+                var rental_card = $("<div class='event-card'></div>");
+                var rental_details = $(
+                    "<table class='rental-details'>" +
+                        "<tr><th>Mulai Sewa</th><td>" +
+                        rentals[i]["rental_date"] +
+                        "</td></tr>" +
+                        "<tr><th>Pengembalian</th><td>" +
+                        rentals[i]["return_date"] +
+                        "</td></tr>" +
+                        "<tr><th>Nama Order</th><td>" +
+                        rentals[i]["order_name"] +
+                        "</td></tr>" +
+                        "<tr><th>WhatsApp</th><td>" +
+                        rentals[i]["order_whatsapp"] +
+                        "</td></tr>" +
+                        "<tr><th>Alamat Pemasangan</th><td>" +
+                        rentals[i]["installation_address"] +
+                        "</td></tr>" +
+
+                        "<tr><th>Status</th><td>" +
+                        rentals[i]["status"] +
+                        "</td></tr>" +
+                        "</table>"
                 );
-                var event_count = $(
-                    "<div class='event-count'>" +
-                        events[i]["invited_count"] +
-                        " Invited</div>"
-                );
-                if (events[i]["cancelled"] === true) {
-                    $(event_card).css({ "border-left": "10px solid #FF1744" });
-                    event_count = $(
-                        "<div class='event-cancelled'>Cancelled</div>"
-                    );
-                }
-                $(event_card).append(event_name).append(event_count);
-                $(".events-container").append(event_card);
+                $(rental_card).css({ "border-left": "10px solid #32CD32" });
+                $(rental_card).append(rental_details);
+                $(".events-container").append(rental_card);
             }
         }
     }
+
+    $(document).on("click", ".table-date.rental-date", function () {
+        var transaction = JSON.parse($(this).attr("data-transaction"));
+        show_events(transaction.rentals, $(this).data("month"), $(this).text());
+    });
 
     function check_events(day, month, year) {
         var events = [];
@@ -160,44 +173,37 @@
 
     // Cek rental dates untuk highlight hijau
     function highlight_rentals(transactions) {
-        transactions.forEach((transaction) => {
-            transaction.rentals.forEach((rental) => {
-                let rentalDate = new Date(rental.rental_date);
-                let returnDate = new Date(rental.return_date);
-                while (rentalDate <= returnDate) {
-                    let day = rentalDate.getDate();
-                    let month = rentalDate.getMonth();
-                    let year = rentalDate.getFullYear();
-                    $(`.table-date:contains(${day})`)
-                        .filter(function () {
-                            return (
-                                $(this).text() == day.toString() &&
-                                !$(this).hasClass("nil") &&
-                                $(".year").text() == year.toString() &&
-                                $(".months-row .active-month").index() == month
-                            );
-                        })
-                        .addClass("rental-date")
-                        .attr("data-transaction", JSON.stringify(transaction));
-                    rentalDate.setDate(rentalDate.getDate() + 1);
-                }
-            });
+        const colors = ["rental-date-a", "rental-date-b", "rental-date-c"];
+
+        // Urutkan transaksi berdasarkan tanggal rental_date secara ascending
+        transactions.sort((a, b) => new Date(a.rentals[0].rental_date) - new Date(b.rentals[0].rental_date));
+
+        transactions.forEach((transaction, index) => {
+          const colorClass = colors[index % colors.length];
+          transaction.rentals.forEach((rental) => {
+            let rentalDate = new Date(rental.rental_date);
+            let returnDate = new Date(rental.return_date);
+            while (rentalDate <= returnDate) {
+              let day = rentalDate.getDate();
+              let month = rentalDate.getMonth();
+              let year = rentalDate.getFullYear();
+              $(`.table-date:contains(${day})`).filter(function() {
+                return $(this).text() == day.toString() && !$(this).hasClass("nil") && $(".year").text() == year.toString() && $(".months-row .active-month").index() == month;
+              }).each(function() {
+                // Hapus semua kelas warna sebelumnya dan tambahkan yang baru
+                $(this).removeClass(colors.join(' ')).addClass(colorClass).attr("data-transaction", JSON.stringify(transaction));
+              });
+              rentalDate.setDate(rentalDate.getDate() + 1);
+            }
+          });
         });
-    }
 
-    $(document).on("click", ".table-date.rental-date", function () {
-        var transaction = JSON.parse($(this).attr("data-transaction"));
-        $("#transaction-details").html(`
-        <p>Order Name: ${transaction.order_name}</p>
-        <p>WhatsApp: ${transaction.order_whatsapp}</p>
-        <p>Installation Address: ${transaction.installation_address}</p>
-        <p>District: ${transaction.district}</p>
-        <p>Total Amount: ${transaction.total_amount}</p>
-        <p>Status: ${transaction.status}</p>
-      `);
+        $(document).on("click", ".table-date.rental-date-a, .table-date.rental-date-b, .table-date.rental-date-c", function() {
+          var transaction = JSON.parse($(this).attr("data-transaction"));
+          show_events(transaction.rentals);
+        });
+      }
 
-        $(".details-container").show();
-    });
 
     function load_transactions() {
         $.ajax({
