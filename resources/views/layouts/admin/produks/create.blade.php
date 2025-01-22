@@ -101,7 +101,7 @@
                 <img id="preview_4" src="#" alt="Photo 4"
                     style="display: none; width: 150px; margin-top: 10px;">
             </div>
-            <button type="submit" class="btn btn-primary">Create Product</button>
+            <button type="submit" class="btn btn-primary">Tambah Produk</button>
         </form>
     </div>
 

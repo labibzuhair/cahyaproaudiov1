@@ -132,7 +132,7 @@
                     <input type="hidden" id="remove_photo_4" name="remove_photo_4" value="0">
                 @endif
             </div>
-            <button type="submit" class="btn btn-primary">Update Product</button>
+            <button type="submit" class="btn btn-primary">Update Produk</button>
         </form>
     </div>
 
