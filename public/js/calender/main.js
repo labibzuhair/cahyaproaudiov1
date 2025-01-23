@@ -103,53 +103,49 @@
         load_transactions(); // Periksa transaksi setiap kali tahun berubah
     }
 
-    function show_events(rentals, month, day) {
+    function show_events(rentals) {
         $(".events-container").empty();
         $(".events-container").show(250);
         if (rentals.length === 0) {
-            var rental_card = $("<div class='event-card'></div>");
-            var rental_name = $(
-                "<div class='event-name'>Tidak ada persewaan yang direncanakan untuk " +
-                    month +
-                    " " +
-                    day +
-                    ".</div>"
-            );
-            $(rental_card).css({ "border-left": "10px solid #32CD32" });
-            $(rental_card).append(rental_name);
-            $(".events-container").append(rental_card);
+          var rental_card = $("<div class='event-card'></div>");
+          var rental_name = $(
+            "<div class='event-name'>There are no rentals planned for this date.</div>"
+          );
+          $(rental_card).css({ "border-left": "10px solid #32CD32" });
+          $(rental_card).append(rental_name);
+          $(".events-container").append(rental_card);
         } else {
-            for (var i = 0; i < rentals.length; i++) {
-                var rental_card = $("<div class='event-card'></div>");
-                var rental_details = $(
-                    "<table class='rental-details'>" +
-                        "<tr><th>Mulai Sewa</th><td>" +
-                        rentals[i]["rental_date"] +
-                        "</td></tr>" +
-                        "<tr><th>Pengembalian</th><td>" +
-                        rentals[i]["return_date"] +
-                        "</td></tr>" +
-                        "<tr><th>Nama Order</th><td>" +
-                        rentals[i]["order_name"] +
-                        "</td></tr>" +
-                        "<tr><th>WhatsApp</th><td>" +
-                        rentals[i]["order_whatsapp"] +
-                        "</td></tr>" +
-                        "<tr><th>Alamat Pemasangan</th><td>" +
-                        rentals[i]["installation_address"] +
-                        "</td></tr>" +
+          for (var i = 0; i < rentals.length; i++) {
+            var rental_card = $("<div class='event-card'></div>");
+            var rental_details = $(
+              "<table class='rental-details'>" +
+                "<tr><th>Rental Date</th><td>" + rentals[i]["rental_date"] + "</td></tr>" +
+                "<tr><th>Return Date</th><td>" + rentals[i]["return_date"] + "</td></tr>" +
+                "<tr><th>Order Name</th><td>" + rentals[i]["order_name"] + "</td></tr>" +
+                "<tr><th>WhatsApp</th><td>" + rentals[i]["order_whatsapp"] + "</td></tr>" +
+                "<tr><th>Installation Address</th><td>" + rentals[i]["installation_address"] + "</td></tr>" +
+                "<tr><th>District</th><td>" + rentals[i]["district"] + "</td></tr>" +
+                "<tr><th>Total Amount</th><td>" + rentals[i]["total_amount"] + "</td></tr>" +
+                "<tr><th>Status</th><td>" + rentals[i]["status"] + "</td></tr>" +
+              "</table>"
+            );
 
-                        "<tr><th>Status</th><td>" +
-                        rentals[i]["status"] +
-                        "</td></tr>" +
-                        "</table>"
-                );
-                $(rental_card).css({ "border-left": "10px solid #32CD32" });
-                $(rental_card).append(rental_details);
-                $(".events-container").append(rental_card);
-            }
+            // Tambahkan ID dan event click untuk menuju ke halaman transaksi
+            $(rental_card).attr("data-id", rentals[i]["transaction_id"]).css({ "border-left": "10px solid #32CD32" }).append(rental_details).click(function() {
+              var transactionId = $(this).data("id");
+
+              // Tambahkan debug untuk memeriksa ID transaksi
+
+              window.location.href = "/admin/transactions/" + transactionId;
+            });
+
+            $(".events-container").append(rental_card);
+          }
         }
-    }
+      }
+
+
+
 
     $(document).on("click", ".table-date.rental-date", function () {
         var transaction = JSON.parse($(this).attr("data-transaction"));
@@ -190,19 +186,27 @@
               $(`.table-date:contains(${day})`).filter(function() {
                 return $(this).text() == day.toString() && !$(this).hasClass("nil") && $(".year").text() == year.toString() && $(".months-row .active-month").index() == month;
               }).each(function() {
+                // Tambahkan debug untuk memeriksa ID transaksi
+                console.log(`Adding ID ${transaction.id} to date ${day}`);
+
                 // Hapus semua kelas warna sebelumnya dan tambahkan yang baru
-                $(this).removeClass(colors.join(' ')).addClass(colorClass).attr("data-transaction", JSON.stringify(transaction));
+                $(this).removeClass(colors.join(' ')).addClass(colorClass).attr({
+                  "data-transaction": JSON.stringify(transaction),
+                  "data-id": transaction.id
+                });
               });
               rentalDate.setDate(rentalDate.getDate() + 1);
             }
           });
         });
 
-        $(document).on("click", ".table-date.rental-date-a, .table-date.rental-date-b, .table-date.rental-date-c", function() {
+        $(document).on("click", ".table-date.rental-date-a, .table-date.rental-date-b, .table-date-c", function() {
           var transaction = JSON.parse($(this).attr("data-transaction"));
           show_events(transaction.rentals);
         });
       }
+
+
 
 
     function load_transactions() {
