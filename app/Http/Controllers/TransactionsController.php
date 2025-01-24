@@ -92,8 +92,10 @@ class TransactionsController extends Controller
         $data['getRecord'] = User::find($user->id);
         $data['produks'] = Produk::all();
         $data['districts'] = District::all();
+        $data['rentals'] = Rentals::with('produk')->get(); // Ambil produk terkait dengan rental
         return view('layouts.admin.transaksi.create', $data);
     }
+
 
 
     public function store(Request $request)

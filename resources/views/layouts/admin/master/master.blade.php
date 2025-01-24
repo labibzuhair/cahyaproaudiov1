@@ -30,95 +30,109 @@
     <link rel="stylesheet" href="{{ asset('css/calender/style.css') }}">
 
     <style>
+        .content-small{
+            width: 50%;
+            margin: 20px;
+            background: #7e0cf50f;
+        }
+        .ftco-section-small {
+    padding: 0;
+}
         .content {
-            display: flex;
-            flex-wrap: wrap;
+          display: flex;
+          flex-wrap: wrap;
         }
 
         .calendar-container {
-            flex: 1;
-            min-width: 300px;
+          flex: 1;
+          min-width: 300px;
         }
 
         .events-container {
-            flex: 1;
-            min-width: 300px;
+          flex: 1;
+          min-width: 300px;
+          padding: 20px;
         }
 
         .active-date {
-            background-color: #9370DB;
-            /* Warna ungu */
-            color: white;
+          color: white;
         }
 
         .rental-date-a {
-            background-color: #FF6347;
-            /* Warna A */
-            color: white;
+          background-color: #FF6347; /* Warna A */
+          color: white;
         }
 
         .rental-date-b {
-            background-color: #FFD700;
-            /* Warna B */
-            color: white;
+          background-color: #FFD700; /* Warna B */
+          color: white;
         }
 
         .rental-date-c {
-            background-color: #32CD32;
-            /* Warna C */
-            color: white;
+          background-color: #32CD32; /* Warna C */
+          color: white;
         }
 
         .event-date {
-            border-left: 10px solid #FF1744;
-            /* Warna merah untuk event */
+          border-left: 10px solid #FF1744; /* Warna merah untuk event */
         }
 
         .rental-details {
-            width: 100%;
-            border-collapse: collapse;
+          width: 100%;
+          border-collapse: collapse;
         }
 
-        .rental-details th,
-        .rental-details td {
-            border: 1px solid white;
-            padding: 8px;
-            text-align: left;
+        .rental-details th, .rental-details td {
+          border: 1px solid white;
+          padding: 8px;
+          text-align: left;
         }
 
         .rental-details th {
-            background-color: #4CAF50;
-            color: white;
+          background-color: #4CAF50;
+          color: white;
         }
 
         @media (max-width: 768px) {
-            .content {
-                flex-direction: column;
-            }
+          .content {
+            flex-direction: column;
+          }
 
-            .calendar-container,
-            .events-container {
-                width: 100%;
-            }
+          .calendar-container, .events-container {
+            width: 100%;
+          }
 
-            .events-container {
-                margin-top: 20px;
-            }
+          .events-container {
+            margin-top: 20px;
+          }
         }
 
         @media (max-width: 480px) {
+          .calendar-container, .events-container {
+            padding: 10px;
+          }
 
-            .calendar-container,
-            .events-container {
-                padding: 10px;
-            }
-
-            .rental-details th,
-            .rental-details td {
-                padding: 5px;
-            }
+          .rental-details th, .rental-details td {
+            padding: 5px;
+          }
         }
-    </style>
+
+        /* CSS untuk Kalender Kecil */
+        .small-calendar-container {
+          flex: 1;
+          min-width: 150px; /* Lebar minimum lebih kecil */
+          padding: 5px; /* Padding lebih kecil */
+        }
+
+        .small-calendar-container .calendar {
+          font-size: 0.7em; /* Ukuran font lebih kecil */
+        }
+
+        /* Hapus elemen detail untuk kalender kecil */
+        .small-events-container {
+          display: none; /* Sembunyikan container detail rental */
+        }
+      </style>
 
 
 
@@ -163,7 +177,7 @@
         <!-- FullCalendar JS for custom calender -->
         <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
 
-        <!-- Bootstrap core JavaScript-->
+        
       <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
