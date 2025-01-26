@@ -15,6 +15,18 @@
         load_transactions(); // Pastikan transaksi dimuat setelah inisialisasi kalender
     });
 
+    $(document).ready(function() {
+        $("#cretate_transactions").on("submit", function(e) {
+            var rentalDateInput = $("#rental_date").val();
+            if (!rentalDateInput) {
+                alert("Tanggal rental harus diisi.");
+                e.preventDefault(); // Mencegah form dikirim
+                $("#rental_date").focus();
+            }
+        });
+    });
+
+
     function init_calendar(date) {
         $(".tbody").empty();
         $(".events-container").empty();

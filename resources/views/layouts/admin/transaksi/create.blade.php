@@ -7,7 +7,7 @@
 
     <div class="container mt-5">
         <h1 class="mb-4">Form Pemesanan</h1>
-        <form action="{{ route('admin.transactions.store') }}" method="POST">
+        <form action="{{ route('admin.transactions.store') }}" method="POST" id="cretate_transactions" novalidate>
             @csrf
             <div class="form-group">
                 <label for="order_name">Nama Pemesan</label>
