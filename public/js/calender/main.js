@@ -170,11 +170,28 @@ function checkProductAvailability(date, rentals, selectedProductIds) {
                                 .attr(
                                     "data-transaction",
                                     JSON.stringify(transaction)
-                                );
+                                )
+                            .data("original-class", `table-date ${colorClass}`);
                         });
                     rentalDate.setDate(rentalDate.getDate() + 1);
                 }
             });
+        });
+
+        $(document).on("click", ".table-date", function () {
+
+            // Kembalikan semua tanggal menjadi kelas asli mereka
+            $(".table-date").each(function () {
+                var originalClass = $(this).data("original-class");
+                if (originalClass) {
+                    $(this).attr("class", originalClass);
+                } else {
+                    $(this).removeClass("active-date");
+                }
+            });
+
+            // Tambahkan highlight aktif pada tanggal yang diklik
+            $(this).removeClass("rental-date-a rental-date-b rental-date-c").addClass("active-date");
         });
 
         $(document).on(
