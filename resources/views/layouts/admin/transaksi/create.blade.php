@@ -52,8 +52,8 @@
         placeholder="Pilih Tanggal Pada Kalender di Bawah" required readonly>
 
     <label for="rental_days">Jumlah Hari Rental</label>
-    <input type="text" class="form-control" id="rental_days" name="rental_days"
-        placeholder="Pilih Tanggal Pada Kalender di Bawah" required readonly min="1">
+    <input type="number" class="form-control" id="rental_days" name="rental_days"
+        placeholder="Pilih Tanggal Pada Kalender di Bawah" required  min="1">
 
     <section class="ftco-section-small">
         <div class="container">

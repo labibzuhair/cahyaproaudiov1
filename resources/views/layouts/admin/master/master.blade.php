@@ -132,6 +132,9 @@
         .small-events-container {
           display: none; /* Sembunyikan container detail rental */
         }
+    .disabled-date {
+        pointer-events: none;
+    }
       </style>
 
 
@@ -177,7 +180,7 @@
         <!-- FullCalendar JS for custom calender -->
         <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
 
-        
+
       <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
