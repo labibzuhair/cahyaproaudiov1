@@ -22,34 +22,32 @@ class TransactionsController extends Controller
     // Fungsi untuk mendapatkan data transaksi dan mengembalikannya sebagai JSON
     public function fetchTransactions()
     {
-        // Mengambil data transaksi dengan status disetujui, diproses, dan selesai
-        $transactions = Transactions::with('rentals', 'district')
+        // Mengambil data transaksi yang memiliki status tertentu
+        $transactions = Transactions::with(['rentals.produk', 'district'])
             ->whereIn('status', ['disetujui', 'diproses', 'selesai'])
             ->get();
 
-        // Menyiapkan data yang diperlukan untuk dikembalikan sebagai JSON
+        // Menyiapkan data JSON
         $data = $transactions->map(function ($transaction) {
             return [
                 'id' => $transaction->id,
                 'order_name' => $transaction->order_name,
                 'order_whatsapp' => $transaction->order_whatsapp,
                 'installation_address' => $transaction->installation_address,
-                'district' => $transaction->district->name,
+                'district' => $transaction->district->name ?? 'Tidak Diketahui',
                 'total_amount' => $transaction->total_amount,
                 'status' => $transaction->status,
                 'rentals' => $transaction->rentals->map(function ($rental) use ($transaction) {
                     return [
                         'rental_date' => $rental->rental_date,
                         'return_date' => $rental->return_date,
-                        'transaction_id' => $transaction->id, // Menggunakan ID transaksi dari transaction
-                        'order_name' => $transaction->order_name,
-                        'order_whatsapp' => $transaction->order_whatsapp,
-                        'installation_address' => $transaction->installation_address,
-                        'district' => $transaction->district->name,
-                        'total_amount' => $transaction->total_amount,
-                        'status' => $transaction->status,
+                        'transaction_id' => $transaction->id,
+                        'produk' => $rental->produk ? [
+                            'id' => $rental->produk->id,
+                            'name' => $rental->produk->name,
+                        ] : null, // Menangani jika produk tidak ada
                     ];
-                })
+                }),
             ];
         });
 
@@ -89,10 +87,22 @@ class TransactionsController extends Controller
     public function create()
     {
         $user = Auth::user();
+
         $data['getRecord'] = User::find($user->id);
         $data['produks'] = Produk::all();
         $data['districts'] = District::all();
-        $data['rentals'] = Rentals::with('produk')->get(); // Ambil produk terkait dengan rental
+        // Memfilter hanya rentals dengan transaksi yang memiliki status yang valid
+        $data['rentals'] = Rentals::with(['produk', 'transaction'])
+            ->whereHas('transaction', function ($query) {
+                $query->whereIn('status', ['disetujui', 'diproses', 'selesai']);
+            })
+            ->get();
+
+        // Ambil transaksi dengan produk dalam rental
+        $data['transactions'] = Transactions::with(['rentals.produk', 'district'])
+            ->whereIn('status', ['disetujui', 'diproses', 'selesai'])
+            ->get();
+
         return view('layouts.admin.transaksi.create', $data);
     }
 

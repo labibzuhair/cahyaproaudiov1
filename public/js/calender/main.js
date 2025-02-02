@@ -26,6 +26,89 @@
         });
     });
 
+    $(document).ready(function () {
+        // Sembunyikan kalender saat pertama kali halaman dimuat
+        $("#create-calendar").hide();
+
+        // Event listener untuk input tanggal rental hanya di halaman create
+        $("#rental_date").on("click", function (e) {
+            e.preventDefault();
+            $("#create-calendar").show();
+        });
+
+        // Event listener untuk input jumlah hari rental hanya di halaman create
+        $("#rental_days").on("click", function (e) {
+            e.preventDefault();
+            if ($("#rental_date").val()) {
+                $("#create-calendar").show();
+            } else {
+                alert("Pilih tanggal rental terlebih dahulu.");
+            }
+        });
+
+        // Sembunyikan kalender saat mengklik di luar input hanya di halaman create
+        $(document).click(function(event) {
+            if (!$(event.target).closest("#create-calendar, #rental_date, #rental_days").length) {
+                $("#create-calendar").hide();
+            }
+        });
+    });
+
+    function date_click(event) {
+        $(".events-container").show(250);
+        $("#dialog").hide(250);
+        $(".active-date").removeClass("active-date");
+        $(this).addClass("active-date");
+        show_events(event.data.events, event.data.month, event.data.day);
+    }
+
+    function date_click_create(event) {
+        let clickedDate = new Date(event.data.year, event.data.month, event.data.day);
+        if ($("#rental_date").is(":focus")) {
+            // Input Tanggal Rental
+            startDate = clickedDate;
+            $(".table-date").removeClass("active-date active-range");
+            $(this).addClass("active-date");
+            $("#rental_date").val(startDate.toISOString().split('T')[0]);
+            $("#create-calendar").hide();
+        } else if ($("#rental_days").is(":focus")) {
+            // Input Jumlah Hari Rental
+            if (!startDate) {
+                alert("Pilih tanggal rental terlebih dahulu.");
+                return;
+            }
+            endDate = clickedDate;
+            highlightRange(startDate, endDate);
+            let rentalDays = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1;
+            $("#rental_days").val(rentalDays);
+            $("#create-calendar").hide();
+
+            // Lakukan pengecekan untuk rentang tanggal
+            let selectedDate = $("#rental_date").val();
+            const selectedProductIds = getSelectedProducts();
+            const conflictingProducts = checkProductAvailabilityRange(selectedDate, rentalDays, rentals, selectedProductIds);
+
+            if (conflictingProducts.length > 0) {
+                const conflictMessages = conflictingProducts.map(conflict => `${conflict.product} telah disewa pada tanggal ${conflict.date}`);
+                const placeholderMessage = conflictMessages.join('. ');
+                $("#rental_date").val("").attr("placeholder", placeholderMessage);
+                $("#rental_days").val("");
+                $(".table-date").removeClass("active-date active-range");
+                startDate = null;
+                endDate = null;
+            }
+        }
+    }
+
+    function highlightRange(startDate, endDate) {
+        let currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+            let day = currentDate.getDate();
+            $(`.table-date:contains(${day})`).addClass("active-range");
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+    }
+
 
     function init_calendar(date) {
         $(".tbody").empty();
