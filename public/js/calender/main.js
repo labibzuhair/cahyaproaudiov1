@@ -41,6 +41,20 @@
             e.preventDefault();
             if ($("#rental_date").val()) {
                 $("#create-calendar").show();
+                let currentDate = new Date(startDate);
+                while (currentDate <= endDate) {
+                    let day = currentDate.getDate();
+                    $(`.table-date:contains(${day})`).filter(function () {
+                        return (
+                            $(this).text() == day.toString() &&
+                            !$(this).hasClass("nil") &&
+                            $(".year").text() == currentDate.getFullYear().toString() &&
+                            $(".months-row .active-month").index() == currentDate.getMonth()
+                        );
+                    }).addClass("active-date");
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+
             } else {
                 alert("Pilih tanggal rental terlebih dahulu.");
             }
@@ -131,47 +145,47 @@ function highlightRange(startDate, endDate) {
     }
 }
 
-// Perbarui fungsi date_click_create untuk memeriksa apakah input jumlah hari rental aktif
-function date_click_create(event) {
-    let clickedDate = new Date(event.data.year, event.data.month, event.data.day);
-    if ($("#rental_date").is(":focus")) {
-        // Input Tanggal Rental
-        startDate = clickedDate;
-        $(".table-date").removeClass("active-date disabled-date");
-        $(this).addClass("active-date");
-        $("#rental_date").val(startDate.toISOString().split('T')[0]);
-        $("#create-calendar").hide();
-    } else if ($("#rental_days").is(":focus")) {
-        // Input Jumlah Hari Rental
-        if (!startDate) {
-            alert("Pilih tanggal rental terlebih dahulu.");
-            return;
-        }
-        endDate = clickedDate;
-        highlightRange(startDate, endDate);
-        let rentalDays = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1;
-        $("#rental_days").val(rentalDays);
-        $("#create-calendar").hide();
+// // Perbarui fungsi date_click_create untuk memeriksa apakah input jumlah hari rental aktif
+// function date_click_create(event) {
+//     let clickedDate = new Date(event.data.year, event.data.month, event.data.day);
+//     if ($("#rental_date").is(":focus")) {
+//         // Input Tanggal Rental
+//         startDate = clickedDate;
+//         $(".table-date").removeClass("active-date disabled-date");
+//         $(this).addClass("active-date");
+//         $("#rental_date").val(startDate.toISOString().split('T')[0]);
+//         $("#create-calendar").hide();
+//     } else if ($("#rental_days").is(":focus")) {
+//         // Input Jumlah Hari Rental
+//         if (!startDate) {
+//             alert("Pilih tanggal rental terlebih dahulu.");
+//             return;
+//         }
+//         endDate = clickedDate;
+//         highlightRange(startDate, endDate);
+//         let rentalDays = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1;
+//         $("#rental_days").val(rentalDays);
+//         $("#create-calendar").hide();
 
-        // Lakukan pengecekan untuk rentang tanggal
-        let selectedDate = $("#rental_date").val();
-        const selectedProductIds = getSelectedProducts();
-        const conflictingProducts = checkProductAvailabilityRange(selectedDate, rentalDays, rentals, selectedProductIds);
+//         // Lakukan pengecekan untuk rentang tanggal
+//         let selectedDate = $("#rental_date").val();
+//         const selectedProductIds = getSelectedProducts();
+//         const conflictingProducts = checkProductAvailabilityRange(selectedDate, rentalDays, rentals, selectedProductIds);
 
-        if (conflictingProducts.length > 0) {
-            const conflictMessages = conflictingProducts.map(conflict => `${conflict.product} telah disewa pada tanggal ${conflict.date}`);
-            const placeholderMessage = conflictMessages.join('. ');
-            $("#rental_date").val("").attr("placeholder", placeholderMessage);
-            $("#rental_days").val("");
-            $(".table-date").removeClass("active-date");
-            startDate = null;
-            endDate = null;
-        } else {
-            // Highlight aktif pada rentang tanggal rental yang ditentukan
-            highlightRange(startDate, endDate);
-        }
-    }
-}
+//         if (conflictingProducts.length > 0) {
+//             const conflictMessages = conflictingProducts.map(conflict => `${conflict.product} telah disewa pada tanggal ${conflict.date}`);
+//             const placeholderMessage = conflictMessages.join('. ');
+//             $("#rental_date").val("").attr("placeholder", placeholderMessage);
+//             $("#rental_days").val("");
+//             $(".table-date").removeClass("active-date");
+//             startDate = null;
+//             endDate = null;
+//         } else {
+//             // Highlight aktif pada rentang tanggal rental yang ditentukan
+//             highlightRange(startDate, endDate);
+//         }
+//     }
+// }
 
 
     function init_calendar(date) {
