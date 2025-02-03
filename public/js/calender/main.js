@@ -145,6 +145,56 @@ function highlightRange(startDate, endDate) {
     }
 }
 
+// Fungsi untuk mengecek ketersediaan produk pada rentang tanggal tertentu
+function checkProductAvailabilityRange(startDate, rentalDays, rentals, selectedProductIds) {
+    const conflictingProducts = [];
+    let currentDate = new Date(startDate);
+    let endDate = new Date(startDate);
+    endDate.setDate(currentDate.getDate() + rentalDays - 1);
+
+    while (currentDate <= endDate) {
+        let dateStr = currentDate.toISOString().split('T')[0];
+        rentals.forEach((rental) => {
+            if (rental.rental_date <= dateStr && rental.return_date >= dateStr) {
+                selectedProductIds.forEach((productId) => {
+                    if (rental.produk.id == productId) {
+                        conflictingProducts.push({
+                            product: rental.produk.name,
+                            date: dateStr
+                        });
+                    }
+                });
+            }
+        });
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return conflictingProducts;
+}
+
+// Event listener untuk input jumlah hari rental
+$("#rental_days").on("input", function () {
+    let rentalDays = parseInt($(this).val());
+    if (rentalDays && $("#rental_date").val()) {
+        let startDate = new Date($("#rental_date").val());
+        let endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + rentalDays - 1);
+
+        // Panggil fungsi checkProductAvailabilityRange untuk mengecek ketersediaan produk
+        const selectedProductIds = getSelectedProducts();
+        const conflictingProducts = checkProductAvailabilityRange(startDate, rentalDays, rentals, selectedProductIds);
+
+        if (conflictingProducts.length > 0) {
+            // Buat pesan placeholder dengan tanggal dan produk yang sedang disewa
+            const conflictMessages = conflictingProducts.map(conflict => `${conflict.product} sedang disewa pada ${conflict.date}`).join('. ');
+            $("#rental_days").val("").attr("placeholder", conflictMessages);
+        } else {
+            // Isi nilai jumlah hari rental jika tidak ada konflik
+            highlightRange(startDate, endDate);
+        }
+    }
+});
+
 // // Perbarui fungsi date_click_create untuk memeriksa apakah input jumlah hari rental aktif
 // function date_click_create(event) {
 //     let clickedDate = new Date(event.data.year, event.data.month, event.data.day);
