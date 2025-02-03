@@ -192,11 +192,18 @@ class TransactionsController extends Controller
         $transaction = Transactions::with('rentals')->findOrFail($id);
         $produks = Produk::all();
         $districts = District::all();
+        $rentals = Rentals::with(['produk', 'transaction'])
+        ->whereHas('transaction', function ($query) {
+            $query->whereIn('status', ['disetujui', 'diproses', 'selesai']);
+        })
+        ->get();
+
         $data = [
             'getRecord' => $user,
             'transaction' => $transaction,
             'produks' => $produks,
-            'districts' => $districts
+            'districts' => $districts,
+            'rentals' => $rentals
         ];
         return view('layouts.admin.transaksi.edit', $data);
     }

@@ -39,6 +39,8 @@
         // Event listener untuk input jumlah hari rental hanya di halaman create
         $("#rental_days").on("click", function (e) {
             e.preventDefault();
+            $("#create-calendar .small-calendar-container").addClass("disabled-date").show(); // Tambahkan kelas disabled-date ke kalender
+
             if ($("#rental_date").val()) {
                 $("#create-calendar").show();
                 let currentDate = new Date(startDate);
@@ -448,6 +450,8 @@ function checkProductAvailability(date, rentals, selectedProductIds) {
         }
 
     }
+
+    
 
     function show_events(rentals, month, day) {
         $(".events-container").empty();
