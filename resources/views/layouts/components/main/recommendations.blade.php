@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row flex-column">
     @foreach ($recommendedProduks as $produk)
-        <div class="col-md-4">
+        <div class="col-12 mb-3"> <!-- Gunakan col-12 agar satu produk satu baris -->
             <div class="card">
                 <img src="{{ asset('storage/' . $produk->photo_main) }}" class="card-img-top" alt="{{ $produk->name }}">
                 <div class="card-body">

@@ -22,7 +22,7 @@
                     <form id="remove-from-cart-form-{{ $item->produk_id }}"
                         action="{{ route('customer.cart.remove', $item->produk_id) }}" method="POST">
                         @csrf
-                        <button type="button" class="btn btn-danger remove-from-cart-btn"
+                        <button type="button" class="btn btn-danger remove-from-cart-btn dell"
                             data-id="{{ $item->produk_id }}">Hapus</button>
                     </form>
                 </td>

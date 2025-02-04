@@ -11,7 +11,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID Transaksi</th>
+                        <th>No</th>
                         <th>Nama Pemesan</th>
                         <th>No WhatsApp</th>
                         <th>Alamat Pemasangan</th>
@@ -25,7 +25,7 @@
                 <tbody>
                     @foreach ($transactions as $transaction)
                         <tr>
-                            <td>{{ $transaction->id }}</td>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $transaction->order_name }}</td>
                             <td>{{ $transaction->order_whatsapp }}</td>
                             <td>{{ $transaction->installation_address }}</td>

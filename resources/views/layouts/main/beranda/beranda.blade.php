@@ -162,7 +162,7 @@
                                     </div>
                                     <div class="p-details">
                                         <div class="d-flex justify-content-between align-items-center mx-2">
-                                            <h5>{{ $produk->name }}</h5>
+                                            <h5 class="text-white">{{ $produk->name }}</h5>
                                             <span>Rp {{ number_format($produk->price, 0, ',', '.') }}</span>
                                         </div>
                                         <div class="mx-2">
@@ -174,11 +174,11 @@
                                                 <span>{{ $produk->type }}</span>
                                             </div>
                                             <div class="d-flex flex-column align-items-center">
-                                                <h6 class="mb-0">Jumlah Unit</h6>
+                                                <h6 class="mb-0">Jum</h6>
                                                 <span>{{ $produk->stock }}</span>
                                             </div>
                                             <div class="d-flex flex-column align-items-center">
-                                                <h6 class="mb-0">DESCRIPTION</h6>
+                                                <h6 class="mb-0">DES</h6>
                                                 <span>{{ Str::limit($produk->description, 30, '...') }}</span>
                                             </div>
                                         </div>
@@ -272,7 +272,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="text-white mt-5">
-                                                        <h1 class="mb-0">{{ $produk->name }}</h1>
+                                                        <h1 class="mb-0 text-white">{{ $produk->name }}</h1>
                                                         <span class="intro-1">Harga: Rp
                                                             {{ number_format($produk->price, 0, ',', '.') }}</span>
                                                         <div class="mt-4">
@@ -307,8 +307,6 @@
                                                                     </form>
                                                                 @endif
                                                             @endauth
-                                                            <button type="button" class="btn btn-secondary mt-2"
-                                                                data-bs-dismiss="modal">Tutup</button>
                                                         </div>
 
 
