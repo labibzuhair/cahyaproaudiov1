@@ -64,11 +64,40 @@ class TransactionController extends Controller
      */
     public function edit($id)
     {
-        $transaction = Transactions::where('id', $id)->where('user_id', Auth::id())->with('rentals.produk')->firstOrFail();
+        // Ambil data transaksi beserta rentals dan produk yang terkait
+        $transaction = Transactions::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->with('rentals.produk')
+            ->firstOrFail();
+
+        // Ambil semua distrik
         $districts = District::all();
-        $produks = Produk::whereNotIn('id', $transaction->rentals->pluck('produk_id'))->get(); // Produk lain
-        return view('layouts.main.transaksi.edit', compact('transaction', 'districts', 'produks'));
+
+        // Ambil produk yang tidak termasuk dalam rental untuk transaksi ini
+        $produks = Produk::whereNotIn('id', $transaction->rentals->pluck('produk_id'))
+            ->get();
+
+        // Ambil data rentals dengan status tertentu beserta produk dan transaksi terkait
+        $rentals = Rentals::with(['produk', 'transaction'])
+            ->whereHas('transaction', function ($query) {
+                $query->whereIn('status', ['disetujui', 'diproses', 'selesai']);
+            })
+            ->get();
+
+
+        // Siapkan data untuk dikirim ke view
+        $data = [
+            'getRecord' => Auth::user(),
+            'transaction' => $transaction,
+            'produks' => $produks,
+            'districts' => $districts,
+            'rentals' => $rentals,
+        ];
+
+        // Kirim data ke view
+        return view('layouts.main.transaksi.edit', $data);
     }
+
 
     public function update(Request $request, $id)
     {
@@ -173,17 +202,14 @@ class TransactionController extends Controller
 
     public function approveAll($id)
     {
-        Log::info("approveAll method started for transaction ID: $id");
 
         try {
             $transaction = Transactions::findOrFail($id);
             $changes = TransactionChanges::where('transaction_id', $id)->get();
 
             foreach ($changes as $change) {
-                Log::info("Processing change ID: {$change->id}, field: {$change->field}");
 
                 if (in_array($change->field, ['rental_date', 'rental_days'])) {
-                    Log::info("Updating rental field: {$change->field} with new value: {$change->new_value}");
 
                     $rental = Rentals::where('transactions_id', $transaction->id)->first();
                     $rental->update([$change->field => $change->new_value]);
@@ -195,7 +221,6 @@ class TransactionController extends Controller
                     // Perbarui return_date pada rental
                     $rental->update(['return_date' => $return_date]);
                 } elseif ($change->field === 'produk_id_added') {
-                    Log::info("Adding new product with ID: {$change->new_value}");
 
                     $product = Produk::find($change->new_value);
                     Rentals::create([
@@ -208,13 +233,11 @@ class TransactionController extends Controller
                         'delivery_fee' => $transaction->district ? $transaction->district->delivery_fee : 0,
                     ]);
                 } elseif ($change->field === 'produk_id_removed') {
-                    Log::info("Removing product with ID: {$change->old_value}");
 
                     Rentals::where('transactions_id', $transaction->id)
                         ->where('produk_id', $change->old_value)
                         ->delete();
                 } else {
-                    Log::info("Updating transaction field: {$change->field} with new value: {$change->new_value}");
                     $transaction->update([$change->field => $change->new_value]);
                 }
             }
@@ -238,24 +261,20 @@ class TransactionController extends Controller
 
             return redirect()->back()->with('success', 'Semua perubahan disetujui dan diimplementasikan.');
         } catch (Exception $e) {
-            Log::error("Terjadi kesalahan saat menyetujui semua perubahan untuk transaction ID: $id. Error: " . $e->getMessage());
             return redirect()->back()->withErrors(['msg' => 'Terjadi kesalahan saat menyetujui semua perubahan. Silakan coba lagi.']);
         }
     }
 
     public function rejectAll($id)
     {
-        Log::info("rejectAll method started for transaction ID: $id");
 
         try {
             $transaction = Transactions::findOrFail($id);
 
-            Log::info("Updating transaction status to 'ditolak' for transaction ID: $id");
             $transaction->update(['status' => 'ditolak']);
 
             return redirect()->back()->with('success', 'Semua perubahan tidak disetujui.');
         } catch (Exception $e) {
-            Log::error("Terjadi kesalahan saat menolak semua perubahan untuk transaction ID: $id. Error: " . $e->getMessage());
             return redirect()->back()->withErrors(['msg' => 'Terjadi kesalahan saat menolak semua perubahan. Silakan coba lagi.']);
         }
     }

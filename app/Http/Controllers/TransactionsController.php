@@ -98,10 +98,6 @@ class TransactionsController extends Controller
             })
             ->get();
 
-        // Ambil transaksi dengan produk dalam rental
-        $data['transactions'] = Transactions::with(['rentals.produk', 'district'])
-            ->whereIn('status', ['disetujui', 'diproses', 'selesai'])
-            ->get();
 
         return view('layouts.admin.transaksi.create', $data);
     }
@@ -213,7 +209,6 @@ class TransactionsController extends Controller
 
     public function update(Request $request, $id)
     {
-        Log::info('Memulai proses update transaksi', ['id' => $id, 'input' => $request->all()]);
 
 
         try {
@@ -231,7 +226,6 @@ class TransactionsController extends Controller
 
             // Update transaksi
             $transaction = Transactions::findOrFail($id);
-            Log::info('Transaksi ditemukan:', ['transaction' => $transaction]);
             $transaction->update([
                 'order_name' => $request->order_name,
                 'order_whatsapp' => $request->order_whatsapp,
@@ -240,16 +234,13 @@ class TransactionsController extends Controller
                 'status' => $request->status,
             ]);
 
-            Log::info('Transaksi berhasil diperbarui:', ['transaction' => $transaction]);
 
             // Hapus rentals lama
             Rentals::where('transactions_id', $transaction->id)->delete();
-            Log::info('Rentals lama berhasil dihapus', ['transaction_id' => $transaction->id]);
 
             // Ambil ongkir berdasarkan kecamatan
             $district = District::find($request->district_id);
             $delivery_fee = $district ? $district->delivery_fee : 0;
-            Log::info('Ongkir berhasil diambil', ['district' => $district, 'delivery_fee' => $delivery_fee]);
 
             // Tambahkan rental items ke transaksi
             $totalAmount = 0;
@@ -280,11 +271,9 @@ class TransactionsController extends Controller
             // Perbarui total_amount pada transaksi
             $transaction->total_amount = $totalAmount;
             $transaction->save();
-            Log::info('Total amount berhasil diperbarui', ['transaction' => $transaction]);
 
             return redirect()->route('admin.transactions.index')->with('success', 'Transaksi berhasil diperbarui');
         } catch (\Exception $e) {
-            Log::error('Update transaksi gagal: ', ['error' => $e->getMessage()]);
             return redirect()->back()->withInput()->with('error', 'Update transaksi gagal! Silakan coba lagi.');
         }
     }
