@@ -39,6 +39,19 @@ class BerandaController extends Controller
         $rentals = Rentals::with('produk', 'transaction.user')->get();
         $data['rentals'] = $rentals;
 
+        // Mengambil total pemesanan produk
+        $totalOrders = Rentals::count();
+
+        // Hitung persentase pemesanan produk
+        $produkPercentage = $data['produks']->map(function ($produk) use ($totalOrders) {
+            $totalOrdered = Rentals::where('produk_id', $produk->id)->count(); // Menghitung pemesanan produk
+            $percentage = $totalOrders > 0 ? ($totalOrdered / $totalOrders) * 100 : 0; // Menghitung persentase pemesanan
+            $produk->order_percentage = $percentage; // Menambahkan persentase pada objek produk
+            return $produk;
+        });
+
+        $data['produkPercentage'] = $produkPercentage;
+
         // Ambil tanggal sekarang
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;

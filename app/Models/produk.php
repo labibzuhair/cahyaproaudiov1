@@ -21,4 +21,10 @@ class produk extends Model
         'photo_3',
         'photo_4',
     ];
+
+    public function rentals()
+    {
+        return $this->hasMany(Rentals::class);
+    }
+
 }
