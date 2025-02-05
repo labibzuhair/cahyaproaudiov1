@@ -25,45 +25,46 @@
 
         <!-- Content Row -->
         <div class="row">
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Pendapatan (Bulanan)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    Rp {{ number_format($monthlyIncome, 0, ',', '.') }}
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
+<!-- Pendapatan Bulanan -->
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Pendapatan (Bulan ini)</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        Rp {{ number_format($monthlyIncome, 0, ',', '.') }}
                     </div>
                 </div>
+                <div class="col-auto">
+                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
 
-            <!-- Earnings (Yearly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Pendapatan (Tahunan)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    Rp {{ number_format($yearlyIncome, 0, ',', '.') }}
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
+<!-- Total Pendapatan -->
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        Total Pendapatan</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        Rp {{ number_format($yearlyIncome, 0, ',', '.') }}
                     </div>
                 </div>
+                <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                </div>
             </div>
+        </div>
+    </div>
+</div>
+
 
             <!-- Pengeluaran Card -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -140,6 +141,15 @@
                     </div>
                 </div>
             </div>
+
+            <script>
+                var labels = @json($keuangan->pluck('bulan'));
+                var pemasukan = @json($keuangan->pluck('total_pemasukan'));
+                var pengeluaran = @json($keuangan->pluck('total_pengeluaran'));
+            </script>
+
+
+
 
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-5">

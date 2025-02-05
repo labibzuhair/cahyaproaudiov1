@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Pemasukan;
 use App\Models\Pengeluaran;
 use Carbon\Carbon;
-use App\Models\Transactions; // Pastikan model transaksi sudah diimport
+use App\Models\Transactions;
+use Illuminate\Support\Facades\DB;
 
 
 class BerandaController extends Controller
@@ -62,6 +63,32 @@ class BerandaController extends Controller
         $data['approvedOrders'] = Transactions::where('status', 'disetujui')->count();
         $data['canceledOrders'] = Transactions::where('status', 'dibatalkan')->count();
         $data['completedOrders'] = Transactions::where('status', 'selesai')->count();
+
+        // Ambil Data Pemasukan & Pengeluaran Per Bulan untuk Grafik
+        $keuangan = DB::table('pemasukans')
+            ->select(
+                DB::raw("DATE_FORMAT(date, '%b') as bulan"),
+                DB::raw("SUM(amount) as total_pemasukan")
+            )
+            ->groupBy('bulan')
+            ->orderByRaw("FIELD(bulan, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')")
+            ->get();
+
+        $pengeluaran = DB::table('pengeluarans')
+            ->select(
+                DB::raw("DATE_FORMAT(date, '%b') as bulan"),
+                DB::raw("SUM(amount) as total_pengeluaran")
+            )
+            ->groupBy('bulan')
+            ->orderByRaw("FIELD(bulan, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')")
+            ->get();
+
+        // Gabungkan data pemasukan dan pengeluaran
+        $data['keuangan'] = collect($keuangan)->map(function ($item) use ($pengeluaran) {
+            $pengeluaranItem = collect($pengeluaran)->firstWhere('bulan', $item->bulan);
+            $item->total_pengeluaran = $pengeluaranItem->total_pengeluaran ?? 0;
+            return $item;
+        });
 
         if ($user) {
             $cartItems = CartItem::where('user_id', $user->id)->pluck('produk_id')->toArray();
