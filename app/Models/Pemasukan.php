@@ -9,12 +9,7 @@ class Pemasukan extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'transaction_id',
-        'amount',
-        'date',
-        'description'
-    ];
+    protected $fillable = ['transaction_id', 'amount', 'description', 'date'];
 
     public function transaction()
     {

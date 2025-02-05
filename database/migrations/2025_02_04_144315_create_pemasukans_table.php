@@ -7,15 +7,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('pemasukan', function (Blueprint $table) {
+        Schema::create('pemasukans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
-            $table->decimal('amount', 10, 2);
+            $table->unsignedBigInteger('transaction_id')->nullable();
+            $table->decimal('amount', 15, 2);
+            $table->text('description')->nullable(); // Tambahkan kolom ini
             $table->date('date');
-            $table->text('description')->nullable();
             $table->timestamps();
+
+            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
         });
     }
+
 
     public function down()
     {

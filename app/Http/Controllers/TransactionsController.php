@@ -106,60 +106,70 @@ class TransactionsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'order_name' => 'required|string|max:255',
-            'order_whatsapp' => 'required|string|max:15',
-            'district_id' => 'required|exists:districts,id',
-            'installation_address' => 'required|string',
-            'rental_date' => 'required|date',
-            'rental_days' => 'required|integer|min:1',
-            'products' => 'required|array',
-            'products.*.produk_id' => 'required|exists:produks,id',
-            'status' => 'required|in:menunggu, disetujui, ditolak, diproses, selesai, dibatalkan',
-        ]);
-        // dd
-        // Buat transaksi baru
-        $transaction = Transactions::create([
-            'user_id' => auth()->id(),
-            'order_name' => $request->order_name,
-            'order_whatsapp' => $request->order_whatsapp,
-            'installation_address' => $request->installation_address,
-            'district_id' => $request->district_id,
-            'total_amount' => 0, // Placeholder, akan diperbarui di bawah
-            'status' => $request->status,
-        ]);
 
-        // Ambil ongkir berdasarkan kecamatan
-        $district = District::find($request->district_id);
-        $delivery_fee = $district ? $district->delivery_fee : 0;
-        // Tambahkan rental items ke transaksi
-        $totalAmount = 0;
-        $rental_date = Carbon::parse($request->rental_date);
-        $rental_days = (int) $request->rental_days; // Konversi ke integer
-        $return_date = $rental_date->copy()->addDays($rental_days - 1);
-        foreach ($request->products as $product) {
-            $produk = Produk::find($product['produk_id']);
-            if ($produk) {
-                $rental = Rentals::create([
-                    'transactions_id' => $transaction->id,
-                    'produk_id' => $product['produk_id'],
-                    'rental_date' => $rental_date,
-                    'return_date' => $return_date,
-                    'rental_days' => $rental_days,
-                    'location' => $request->installation_address,
-                    'delivery_fee' => $delivery_fee,
-                ]);
-                $totalAmount += ($produk->price * $rental_days);
+
+        try {
+            $request->validate([
+                'order_name' => 'required|string|max:255',
+                'order_whatsapp' => 'required|string|max:15',
+                'district_id' => 'required|exists:districts,id',
+                'installation_address' => 'required|string',
+                'rental_date' => 'required|date',
+                'rental_days' => 'required|integer|min:1',
+                'products' => 'required|array',
+                'products.*.produk_id' => 'required|exists:produks,id',
+                'status' => 'required|in:menunggu,disetujui,ditolak,diproses,selesai,dibatalkan',
+            ]);
+            // Buat transaksi baru
+            $transaction = Transactions::create([
+                'user_id' => auth()->id(),
+                'order_name' => $request->order_name,
+                'order_whatsapp' => $request->order_whatsapp,
+                'installation_address' => $request->installation_address,
+                'district_id' => $request->district_id,
+                'total_amount' => 0, // Placeholder, akan diperbarui di bawah
+                'status' => $request->status,
+            ]);
+
+            // Ambil ongkir berdasarkan kecamatan
+            $district = District::find($request->district_id);
+            $delivery_fee = $district ? $district->delivery_fee : 0;
+
+            // Tambahkan rental items ke transaksi
+            $totalAmount = 0;
+            $rental_date = Carbon::parse($request->rental_date);
+            $rental_days = (int) $request->rental_days; // Konversi ke integer
+            $return_date = $rental_date->copy()->addDays($rental_days - 1);
+
+            foreach ($request->products as $product) {
+                $produk = Produk::find($product['produk_id']);
+                if ($produk) {
+                    $rental = Rentals::create([
+                        'transactions_id' => $transaction->id,
+                        'produk_id' => $product['produk_id'],
+                        'rental_date' => $rental_date,
+                        'return_date' => $return_date,
+                        'rental_days' => $rental_days,
+                        'location' => $request->installation_address,
+                        'delivery_fee' => $delivery_fee,
+                    ]);
+                    $totalAmount += ($produk->price * $rental_days);
+                }
             }
-        }
-        // Tambahkan ongkir ke total amount
-        $totalAmount += $delivery_fee;
-        // Perbarui total_amount pada transaksi
-        $transaction->total_amount = $totalAmount;
-        $transaction->save();
 
-        return redirect()->route('admin.transactions.index');
+            // Tambahkan ongkir ke total amount
+            $totalAmount += $delivery_fee;
+
+            // Perbarui total_amount pada transaksi
+            $transaction->total_amount = $totalAmount;
+            $transaction->save();
+
+            return redirect()->route('admin.transactions.index')->with('success', 'Transaksi berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.transactions.index')->with('error', 'Gagal menambahkan transaksi: ' . $e->getMessage());
+        }
     }
+
 
     public function show($id)
     {
@@ -189,10 +199,10 @@ class TransactionsController extends Controller
         $produks = Produk::all();
         $districts = District::all();
         $rentals = Rentals::with(['produk', 'transaction'])
-        ->whereHas('transaction', function ($query) {
-            $query->whereIn('status', ['disetujui', 'diproses', 'selesai']);
-        })
-        ->get();
+            ->whereHas('transaction', function ($query) {
+                $query->whereIn('status', ['disetujui', 'diproses', 'selesai']);
+            })
+            ->get();
 
         $data = [
             'getRecord' => $user,

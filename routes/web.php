@@ -75,10 +75,17 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::post('/transactions/reject_all/{id}', [TransactionController::class, 'rejectAll'])->name('transactions.reject_all');
 
     Route::get('/keuangan', [LaporanKeuanganController::class, 'index'])->name('keuangan.index');
+
+    // Pemasukan
+    Route::get('/keuangan/pemasukan', [LaporanKeuanganController::class, 'pemasukanHistory'])->name('keuangan.pemasukan');
+
+    // Pengeluaran
+    Route::get('/keuangan/pengeluaran', [LaporanKeuanganController::class, 'pengeluaranHistory'])->name('keuangan.pengeluaran');
+    Route::get('/keuangan/pengeluaran/create', [LaporanKeuanganController::class, 'createPengeluaran'])->name('keuangan.pengeluaran.create');
+    Route::post('/keuangan/pengeluaran/store', [LaporanKeuanganController::class, 'storePengeluaran'])->name('keuangan.pengeluaran.store');
+
+    // Laporan Keuangan
     Route::get('/keuangan/laporan', [LaporanKeuanganController::class, 'generateReport'])->name('keuangan.laporan');
-    Route::get('/keuangan/pengeluaran', function () {
-        return view('layouts.admin.keuangan.pengeluaran');
-    })->name('keuangan.pengeluaran');
 
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
 });

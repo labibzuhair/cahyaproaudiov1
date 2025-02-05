@@ -1,64 +1,57 @@
-@extends('layouts.admin')
+@extends('layouts.admin.master.master')
+
+
+@section('title', 'Keuangan')
 
 @section('content')
 <div class="container">
-    <h1 class="mt-4">Manajemen Keuangan</h1>
-    <div class="row mt-3">
+    <h2>Dashboard Keuangan</h2>
+
+    <div class="row">
+        <!-- Kartu Total Pemasukan -->
         <div class="col-md-4">
-            <a href="{{ route('admin.finance.expense') }}" class="btn btn-danger btn-block">
-                <i class="fas fa-money-bill-wave"></i> Tambah Pengeluaran
-            </a>
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Pemasukan</h5>
+                    <h3>Rp {{ number_format($incomeTotal, 0, ',', '.') }}</h3>
+                </div>
+            </div>
         </div>
+
+        <!-- Kartu Total Pengeluaran -->
         <div class="col-md-4">
-            <a href="{{ route('admin.finance.report') }}" class="btn btn-primary btn-block">
-                <i class="fas fa-file-alt"></i> Laporan Keuangan
-            </a>
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Pengeluaran</h5>
+                    <h3>Rp {{ number_format($expenseTotal, 0, ',', '.') }}</h3>
+                </div>
+            </div>
         </div>
     </div>
 
-    <hr>
-
-    <h3 class="mt-4">Pemasukan</h3>
-    <table class="table table-striped">
+    <h3 class="mt-4">Laporan Keuangan</h3>
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Tanggal</th>
-                <th>Jumlah</th>
-                <th>Deskripsi</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Total Pemasukan</th>
+                <th>Total Pengeluaran</th>
+                <th>Keuntungan Bersih</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($incomes as $income)
-                <tr>
-                    <td>{{ $income->date }}</td>
-                    <td>Rp {{ number_format($income->amount, 0, ',', '.') }}</td>
-                    <td>{{ $income->description }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <h3 class="mt-4">Pengeluaran</h3>
-    <table class="table table-striped">
-        <thead>
+            @foreach ($financialReports as $report)
             <tr>
-                <th>Tanggal</th>
-                <th>Jumlah</th>
-                <th>Kategori</th>
-                <th>Deskripsi</th>
+                <td>{{ date('F', mktime(0, 0, 0, $report->month, 1)) }}</td>
+                <td>{{ $report->year }}</td>
+                <td>Rp {{ number_format($report->total_income, 0, ',', '.') }}</td>
+                <td>Rp {{ number_format($report->total_expense, 0, ',', '.') }}</td>
+                <td>Rp {{ number_format($report->net_profit, 0, ',', '.') }}</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach($expenses as $expense)
-                <tr>
-                    <td>{{ $expense->date }}</td>
-                    <td>Rp {{ number_format($expense->amount, 0, ',', '.') }}</td>
-                    <td>{{ $expense->category }}</td>
-                    <td>{{ $expense->description }}</td>
-                </tr>
             @endforeach
         </tbody>
     </table>
-
 </div>
 @endsection
+

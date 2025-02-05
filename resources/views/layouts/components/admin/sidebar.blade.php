@@ -70,6 +70,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Semua Keuangan</h6>
                 <a class="collapse-item {{ request()->routeIs('admin.keuangan.index') ? 'active' : '' }}" href="{{ route('admin.keuangan.index') }}">Keuangan</a>
+                <a class="collapse-item {{ request()->routeIs('admin.keuangan.pemasukan') ? 'active' : '' }}" href="{{ route('admin.keuangan.pemasukan') }}">Pemasukan</a>
                 <a class="collapse-item {{ request()->routeIs('admin.keuangan.pengeluaran') ? 'active' : '' }}" href="{{ route('admin.keuangan.pengeluaran') }}">Pengeluaran</a>
                 <a class="collapse-item {{ request()->routeIs('admin.keuangan.laporan') ? 'active' : '' }}" href="{{ route('admin.keuangan.laporan') }}">Laporan Keuangan</a>
             </div>

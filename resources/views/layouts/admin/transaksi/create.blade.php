@@ -5,6 +5,19 @@
 
 @section('content')
 
+
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
     <div class="container mt-5">
         <h1 class="mb-4">Form Pemesanan</h1>
         <form action="{{ route('admin.transactions.store') }}" method="POST" id="cretate_transactions" novalidate>

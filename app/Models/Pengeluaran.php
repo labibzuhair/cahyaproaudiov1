@@ -9,10 +9,5 @@ class Pengeluaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'category',
-        'amount',
-        'date',
-        'description'
-    ];
+    protected $fillable = ['category', 'amount', 'description', 'date'];
 }

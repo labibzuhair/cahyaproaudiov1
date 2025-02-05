@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('laporan_keuangan', function (Blueprint $table) {
+        Schema::create('laporan_keuangans', function (Blueprint $table) {
             $table->id();
             $table->integer('month');
             $table->integer('year');

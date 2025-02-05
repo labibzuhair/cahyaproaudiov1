@@ -1,34 +1,35 @@
-@extends('layouts.admin')
+@extends('layouts.admin.master.master')
+
+@section('title', 'Riwayat Pengeluaran')
 
 @section('content')
 <div class="container">
-    <h1 class="mt-4">Tambah Pengeluaran</h1>
+    <h2>Riwayat Pengeluaran</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    <!-- Tombol Tambah Pengeluaran -->
+    <a href="{{ route('admin.keuangan.pengeluaran.create') }}" class="btn btn-primary mb-3">
+        + Tambah Pengeluaran
+    </a>
 
-    <form action="{{ route('admin.finance.expense') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label>Kategori</label>
-            <input type="text" name="category" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label>Jumlah (Rp)</label>
-            <input type="number" name="amount" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label>Tanggal</label>
-            <input type="date" name="date" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label>Deskripsi</label>
-            <textarea name="description" class="form-control"></textarea>
-        </div>
-        <button type="submit" class="btn btn-danger">Simpan Pengeluaran</button>
-    </form>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Jumlah</th>
+                <th>Kategori</th>
+                <th>Keterangan</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($expenses as $expense)
+            <tr>
+                <td>{{ $expense->date }}</td>
+                <td>Rp {{ number_format($expense->amount, 0, ',', '.') }}</td>
+                <td>{{ $expense->category }}</td>
+                <td>{{ $expense->description }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection

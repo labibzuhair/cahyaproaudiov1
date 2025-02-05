@@ -1,4 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.admin.master.master')
+
+
+@section('title', 'Laporan Keuangan')
 
 @section('content')
 <div class="container">
@@ -33,7 +36,7 @@
         </tbody>
     </table>
 
-    <form action="{{ route('admin.finance.report') }}" method="GET">
+    <form action="{{ route('admin.keuangan.laporan') }}" method="GET">
         <button type="submit" class="btn btn-primary">Perbarui Laporan</button>
     </form>
 </div>
