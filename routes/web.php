@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LaporanKeuanganController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -31,6 +32,7 @@ Route::post('/forgot_post', [AuthController::class, 'forgot_post']);
 Route::get('reset/{token}', [AuthController::class, 'getReset']);
 Route::post('reset_post/{token}', [AuthController::class, 'postReset'])->name('reset_post');
 Route::get('/logout', [AuthController::class, 'logout']);
+
 
 
 
@@ -72,17 +74,20 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::post('/transactions/approve_all/{id}', [TransactionController::class, 'approveAll'])->name('transactions.approve_all');
     Route::post('/transactions/reject_all/{id}', [TransactionController::class, 'rejectAll'])->name('transactions.reject_all');
 
-
-
+    Route::get('/keuangan', [LaporanKeuanganController::class, 'index'])->name('keuangan.index');
+    Route::get('/keuangan/laporan', [LaporanKeuanganController::class, 'generateReport'])->name('keuangan.laporan');
+    Route::get('/keuangan/pengeluaran', function () {
+        return view('layouts.admin.keuangan.pengeluaran');
+    })->name('keuangan.pengeluaran');
 
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
 });
 
 
 // Grup rute untuk owner
-Route::group(['middleware' => 'owner', 'name' => 'owner'], function () {
-    Route::get('/owner/beranda', [BerandaController::class, 'beranda'])->name('owner/beranda');
-
+Route::group(['middleware' => 'owner', 'as' => 'owner.'], function () {
+    Route::get('/owner/beranda', [BerandaController::class, 'beranda'])->name('beranda'); // owner.beranda, bukan owner/beranda
+    // ... rute owner lainnya dengan format owner.nama_aksi
 });
 
 // Grup rute untuk customer

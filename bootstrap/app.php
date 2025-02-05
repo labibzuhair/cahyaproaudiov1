@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'customer' => CustomerMiddleware::class,
         ]);
     })
+
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
