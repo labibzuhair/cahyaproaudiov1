@@ -30,6 +30,12 @@
     </div>
 
     <h3 class="mt-4">Laporan Keuangan</h3>
+    <a href="{{ route('admin.keuangan.laporan') }}" class="btn btn-primary mb-3">
+        <i class="fa-solid fa-rotate"></i> Refrash Laporan
+    </a>
+    <a href="{{ route('admin.keuangan.pengeluaran.create') }}" class="btn btn-primary mb-3">
+        + Tambah Pengeluaran
+    </a>
     <table class="table table-bordered">
         <thead>
             <tr>

@@ -112,4 +112,17 @@ class LaporanKeuanganController extends Controller
 
         return redirect()->back()->with('success', 'Laporan keuangan berhasil diperbarui.');
     }
+    public function destroyPengeluaran($id)
+    {
+        $expense = Pengeluaran::find($id);
+
+        if (!$expense) {
+            return redirect()->back()->with('error', 'Pengeluaran tidak ditemukan.');
+        }
+
+        $expense->delete();
+
+        return redirect()->back()->with('success', 'Pengeluaran berhasil dihapus.');
+    }
+
 }

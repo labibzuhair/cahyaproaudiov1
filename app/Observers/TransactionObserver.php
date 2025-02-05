@@ -17,7 +17,7 @@ class TransactionObserver
                 Pemasukan::create([
                     'transaction_id' => $transaction->id,
                     'amount' => $transaction->total_amount,
-                    'description' => 'Pemasukan dari transaksi ' . $transaction->id,
+                    'description' => 'Pemasukan dari transaksi ' . $transaction->order_name . ' dengan no Whatsapp ' . $transaction->order_whatsapp,
                     'date' => Carbon::now()->toDateString(),
                 ]);
             }

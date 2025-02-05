@@ -83,6 +83,8 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/keuangan/pengeluaran', [LaporanKeuanganController::class, 'pengeluaranHistory'])->name('keuangan.pengeluaran');
     Route::get('/keuangan/pengeluaran/create', [LaporanKeuanganController::class, 'createPengeluaran'])->name('keuangan.pengeluaran.create');
     Route::post('/keuangan/pengeluaran/store', [LaporanKeuanganController::class, 'storePengeluaran'])->name('keuangan.pengeluaran.store');
+    Route::delete('/keuangan/pengeluaran/{id}', [LaporanKeuanganController::class, 'destroyPengeluaran'])
+        ->name('keuangan.pengeluaran.destroy');
 
     // Laporan Keuangan
     Route::get('/keuangan/laporan', [LaporanKeuanganController::class, 'generateReport'])->name('keuangan.laporan');

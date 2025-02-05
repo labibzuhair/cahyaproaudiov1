@@ -18,6 +18,7 @@
                 <th>Jumlah</th>
                 <th>Kategori</th>
                 <th>Keterangan</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,15 @@
                 <td>Rp {{ number_format($expense->amount, 0, ',', '.') }}</td>
                 <td>{{ $expense->category }}</td>
                 <td>{{ $expense->description }}</td>
+                <td>
+                    <!-- Tombol Hapus -->
+                    <form action="{{ route('admin.keuangan.pengeluaran.destroy', $expense->id) }}" method="POST"
+                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengeluaran ini?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>

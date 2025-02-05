@@ -30,6 +30,9 @@
     <link rel="stylesheet" href="{{ asset('css/calender/style.css') }}">
 
     <style>
+        .ftco-section {
+    padding: 1em 0;
+}
         .content-small{
             width: 50%;
             margin: 20px;
@@ -46,6 +49,7 @@
         .calendar-container {
           flex: 1;
           min-width: 300px;
+          background: #f8f9fd;
         }
 
         .events-container {
