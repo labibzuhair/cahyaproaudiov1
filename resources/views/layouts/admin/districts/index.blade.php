@@ -33,32 +33,52 @@
                         <button class="btn btn-secondary" type="button" id="reset-search">Reset</button>
                     </div>
                 </div>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nama Kecamatan</th>
-                            <th>Ongkir</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="districts-table-body">
-                        @foreach ($districts as $district)
-                            <tr class="district-row">
-                                <td class="district-name">{{ $district->name }}</td>
-                                <td>{{ $district->delivery_fee }}</td>
-                                <td>
-                                    <form action="{{ route('admin.districts.update', $district->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="number" class="form-control" name="delivery_fee"
-                                            value="{{ $district->delivery_fee }}" required>
-                                        <button type="submit" class="btn btn-success mt-2">Ubah</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+
+                <section >
+                    <div class="bg-image h-100" style="background-color: #f5f7fa;">
+                      <div class="mask d-flex h-100">
+                        <div class="container">
+                          <div class="row justify-content-center">
+                            <div class="">
+                              <div class="card">
+                                <div class="card-body p-0">
+                                  <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+                                    <table class="table table-striped mb-0">
+                                      <thead style="background-color: #002d72;">
+                                        <tr>
+                                          <th scope="col">Nama Kecamatan</th>
+                                          <th scope="col">Ongkir</th>
+                                          <th scope="col">Aksi</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody id="districts-table-body">
+                                        @foreach ($districts as $district)
+                                            <tr class="district-row">
+                                                <td class="district-name">{{ $district->name }}</td>
+                                                <td>{{ $district->delivery_fee }}</td>
+                                                <td>
+                                                    <form action="{{ route('admin.districts.update', $district->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="number" class="form-control" name="delivery_fee"
+                                                            value="{{ $district->delivery_fee }}" required>
+                                                        <button type="submit" class="btn btn-success mt-2">Ubah</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
             </div>
         </div>
     </div>

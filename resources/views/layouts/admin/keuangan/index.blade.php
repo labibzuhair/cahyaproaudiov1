@@ -29,35 +29,56 @@
         </div>
     </div>
 
-    <h3 class="mt-4">Laporan Keuangan</h3>
-    <a href="{{ route('admin.keuangan.laporan') }}" class="btn btn-primary mb-3">
-        <i class="fa-solid fa-rotate"></i> Refrash Laporan
-    </a>
-    <a href="{{ route('admin.keuangan.pengeluaran.create') }}" class="btn btn-primary mb-3">
-        + Tambah Pengeluaran
-    </a>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Bulan</th>
-                <th>Tahun</th>
-                <th>Total Pemasukan</th>
-                <th>Total Pengeluaran</th>
-                <th>Keuntungan Bersih</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($financialReports as $report)
-            <tr>
-                <td>{{ date('F', mktime(0, 0, 0, $report->month, 1)) }}</td>
-                <td>{{ $report->year }}</td>
-                <td>Rp {{ number_format($report->total_income, 0, ',', '.') }}</td>
-                <td>Rp {{ number_format($report->total_expense, 0, ',', '.') }}</td>
-                <td>Rp {{ number_format($report->net_profit, 0, ',', '.') }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+
+    <div class="container mt-5" style="padding-top: 70px">
+        <h2 class="mb-4">Laporan Keuangan</h2>
+        <a href="{{ route('admin.keuangan.laporan') }}" class="btn btn-primary mb-3">
+            <i class="fa-solid fa-rotate"></i> Refrash Laporan
+        </a>
+        <a href="{{ route('admin.keuangan.pengeluaran.create') }}" class="btn btn-primary mb-3">
+            + Tambah Pengeluaran
+        </a>
+        <section class="intro">
+            <div class="bg-image h-100" style="background-color: #f5f7fa;">
+              <div class="mask d-flex align-items-center h-100">
+                <div class="container">
+                  <div class="row justify-content-center">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-body p-0">
+                          <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 600px">
+                            <table class="table table-striped mb-0">
+                              <thead style="background-color: #002d72; color: white;">
+                                <tr>
+                                  <th>Bulan</th>
+                                  <th>Tahun</th>
+                                  <th>Total Pemasukan</th>
+                                  <th>Total Pengeluaran</th>
+                                  <th>Keuntungan Bersih</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @foreach ($financialReports as $report)
+                                <tr>
+                                  <td>{{ date('F', mktime(0, 0, 0, $report->month, 1)) }}</td>
+                                  <td>{{ $report->year }}</td>
+                                  <td>Rp {{ number_format($report->total_income, 0, ',', '.') }}</td>
+                                  <td>Rp {{ number_format($report->total_expense, 0, ',', '.') }}</td>
+                                  <td>Rp {{ number_format($report->net_profit, 0, ',', '.') }}</td>
+                                </tr>
+                                @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+    </div>
 </div>
 @endsection
 

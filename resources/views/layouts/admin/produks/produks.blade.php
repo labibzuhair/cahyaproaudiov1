@@ -27,82 +27,104 @@
                     </select>
                 </div>
             </div>
+
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Deskripsi</th>
-                                <th>Harga</th>
-                                <th>Type</th>
-                                <th>Stok</th>
-                                <th>Foto</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Deskripsi</th>
-                                <th>Harga</th>
-                                <th>Type</th>
-                                <th>Stok</th>
-                                <th>Foto</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </tfoot>
-                        <tbody id="productTable">
-                            @foreach ($produks as $index => $produk)
-                                <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $produk->name }}</td>
-                                    <td>{{ $produk->description }}</td>
-                                    <td>Rp {{ number_format($produk->price, 0, ',', '.') }}</td>
-                                    <td>{{ $produk->type }}</td>
-                                    <td>{{ $produk->stock }}</td>
-                                    <td>
-                                        <div class="foto-produk">
-                                            <img src="{{ asset('storage/' . $produk->photo_main) }}" class="img-thumbnail"
-                                                alt="{{ $produk->name }}">
-                                            @if ($produk->photo_1)
-                                                <img src="{{ asset('storage/' . $produk->photo_1) }}" class="img-thumbnail"
-                                                    alt="{{ $produk->name }}">
-                                            @endif
-                                            @if ($produk->photo_2)
-                                                <img src="{{ asset('storage/' . $produk->photo_2) }}" class="img-thumbnail"
-                                                    alt="{{ $produk->name }}">
-                                            @endif
-                                            @if ($produk->photo_3)
-                                                <img src="{{ asset('storage/' . $produk->photo_3) }}" class="img-thumbnail"
-                                                    alt="{{ $produk->name }}">
-                                            @endif
-                                            @if ($produk->photo_4)
-                                                <img src="{{ asset('storage/' . $produk->photo_4) }}" class="img-thumbnail"
-                                                    alt="{{ $produk->name }}">
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                            <a href="{{ route('admin.produks.edit', $produk->id) }}"
-                                                class="btn btn-warning btn-sm">Update</a>
 
-                                            <form action="{{ route('admin.produks.destroy', $produk->id) }}" method="POST"
-                                                style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <section class="intro">
+                        <div class="bg-image h-100" style="background-color: #f5f7fa;">
+                          <div class="mask d-flex align-items-center h-100">
+                            <div class="container">
+                              <div class="row justify-content-center">
+                                <div class="col-12">
+                                  <div class="card">
+                                    <div class="card-body p-0">
+                                      <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+
+                                        <table class="table table-bordered mb-0" id="dataTable">
+                                          <thead style="background-color: #002d72;">
+                                            <tr>
+                                              <th >No</th>
+                                              <th >Nama</th>
+                                              <th >Deskripsi</th>
+                                              <th >Harga</th>
+                                              <th >Type</th>
+                                              <th >Stok</th>
+                                              <th >Foto</th>
+                                              <th >Aksi</th>
+                                            </tr>
+                                          </thead>
+                                          <tfoot>
+                                            <tr>
+                                              <th>No</th>
+                                              <th>Nama</th>
+                                              <th>Deskripsi</th>
+                                              <th>Harga</th>
+                                              <th>Type</th>
+                                              <th>Stok</th>
+                                              <th>Foto</th>
+                                              <th>Aksi</th>
+                                            </tr>
+                                          </tfoot>
+                                          <tbody id="productTable">
+                                            @foreach ($produks as $index => $produk)
+                                                <tr>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $produk->name }}</td>
+                                                    <td>{{ $produk->description }}</td>
+                                                    <td>Rp {{ number_format($produk->price, 0, ',', '.') }}</td>
+                                                    <td>{{ $produk->type }}</td>
+                                                    <td>{{ $produk->stock }}</td>
+                                                    <td>
+                                                        <div class="foto-produk">
+                                                            <img src="{{ asset('storage/' . $produk->photo_main) }}" class="img-thumbnail"
+                                                                alt="{{ $produk->name }}">
+                                                            @if ($produk->photo_1)
+                                                                <img src="{{ asset('storage/' . $produk->photo_1) }}" class="img-thumbnail"
+                                                                    alt="{{ $produk->name }}">
+                                                            @endif
+                                                            @if ($produk->photo_2)
+                                                                <img src="{{ asset('storage/' . $produk->photo_2) }}" class="img-thumbnail"
+                                                                    alt="{{ $produk->name }}">
+                                                            @endif
+                                                            @if ($produk->photo_3)
+                                                                <img src="{{ asset('storage/' . $produk->photo_3) }}" class="img-thumbnail"
+                                                                    alt="{{ $produk->name }}">
+                                                            @endif
+                                                            @if ($produk->photo_4)
+                                                                <img src="{{ asset('storage/' . $produk->photo_4) }}" class="img-thumbnail"
+                                                                    alt="{{ $produk->name }}">
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                            <a href="{{ route('admin.produks.edit', $produk->id) }}"
+                                                                class="btn btn-warning btn-sm">Update</a>
+
+                                                            <form action="{{ route('admin.produks.destroy', $produk->id) }}" method="POST"
+                                                                style="display:inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+
                 </div>
             </div>
         </div>

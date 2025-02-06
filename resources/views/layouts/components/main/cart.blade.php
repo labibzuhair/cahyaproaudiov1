@@ -1,12 +1,12 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Produk</th>
-            <th>Nama Produk</th>
-            <th>Harga</th>
-            <th>Jumlah</th>
-            <th>Total</th>
-            <th>Aksi</th>
+            <th  style="color: black;">Produk</th>
+            <th  style="color: black;">Nama Produk</th>
+            <th  style="color: black;">Harga</th>
+            <th  style="color: black;">Jumlah</th>
+            <th  style="color: black;">Total</th>
+            <th  style="color: black;">Aksi</th>
         </tr>
     </thead>
     <tbody>

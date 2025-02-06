@@ -4,9 +4,10 @@
 
 @section('content')
     <div class="container mt-5" style="padding-top: 70px">
-        <div class="row">
+        <div class="row" style="    margin-right: -50px;
+    margin-left: -50px;">
             <!-- Keranjang Belanja (Kiri) -->
-            <div class="col-lg-7 col-md-12 mb-4" id="cart-section">
+            <div class="col-lg-7 col-md-12 " id="cart-section">
                 <h2 class="text-center">Keranjang Belanja</h2>
                 <div id="cart-container">
                     @if ($cartItems->isEmpty())
