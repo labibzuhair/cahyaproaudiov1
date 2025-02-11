@@ -299,6 +299,7 @@
                                         </div>
                                     </div>
                                     <div class="events-container">
+
                                         <!-- Detail rentals akan ditampilkan di sini -->
                                     </div>
                                 </div>
@@ -307,15 +308,10 @@
                     </div>
                 </section>
             </div>
-
-
-
         </div>
 
 
 
-    </div>
-    <!-- /.container-fluid -->
 
     </div>
     <!-- End of Main Content -->

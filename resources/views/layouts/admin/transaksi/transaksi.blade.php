@@ -36,26 +36,53 @@
                                     @if ($changes->isEmpty())
                                         <p>Tidak ada perubahan yang dilakukan oleh user.</p>
                                     @else
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Field</th>
-                                                    <th>Nilai Lama</th>
-                                                    <th>Nilai Baru</th>
-                                                    <th>Tanggal Perubahan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($changes as $change)
-                                                    <tr>
-                                                        <td>{{ $change->field }}</td>
-                                                        <td>{{ $change->old_value }}</td>
-                                                        <td>{{ $change->new_value }}</td>
-                                                        <td>{{ $change->created_at->format('d-m-Y H:i:s') }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                    <section class="intro">
+                                        <div class="bg-image h-100" style="background-color: #f5f7fa;">
+                                          <div class="mask d-flex align-items-center h-100">
+                                            <div class="container">
+                                              <div class="row justify-content-center">
+                                                <div class="col-12">
+                                                  <div class="card">
+                                                    <div class="card-body p-0">
+                                                      <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 300px">
+                                                        <table class="table table-bordered mb-0">
+                                                          <thead style="background-color: #002d72;">
+                                                            <tr>
+                                                              <th style="color: white;">Field</th>
+                                                              <th style="color: white;">Nilai Lama</th>
+                                                              <th style="color: white;">Nilai Baru</th>
+                                                              <th style="color: white;">Tanggal Perubahan</th>
+                                                            </tr>
+                                                          </thead>
+                                                          <tfoot>
+                                                            <tr>
+                                                              <th>Field</th>
+                                                              <th>Nilai Lama</th>
+                                                              <th>Nilai Baru</th>
+                                                              <th>Tanggal Perubahan</th>
+                                                            </tr>
+                                                          </tfoot>
+                                                          <tbody>
+                                                            @foreach ($changes as $change)
+                                                            <tr>
+                                                              <td>{{ $change->field }}</td>
+                                                              <td>{{ $change->old_value }}</td>
+                                                              <td>{{ $change->new_value }}</td>
+                                                              <td>{{ $change->created_at->format('d-m-Y H:i:s') }}</td>
+                                                            </tr>
+                                                            @endforeach
+                                                          </tbody>
+                                                        </table>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </section>
+
 
                                         <div class="mt-4">
                                             @if ($transaction->status === 'menunggu')
@@ -77,7 +104,7 @@
                         </div>
                     </div>
 
-                    <h1 class="text-center mb-5">Daftar Transaksi</h1>
+                    <h1 class="text-center mb-5">Transaksi Bersangkutan</h1>
                     <div class="card">
                         <div class="card-body">
                             <table class="table table-striped">

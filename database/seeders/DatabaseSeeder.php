@@ -21,13 +21,13 @@ class DatabaseSeeder extends Seeder
         $this->call(ProdukSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(DistrictSeeder::class);
-        $this->call(TransactionsSeeder::class);
-        $this->call(RentalsSeeder::class);
-        $this->call([
-            PemasukanSeeder::class,
-            PengeluaranSeeder::class,
-            LaporanKeuanganSeeder::class,
-        ]);
+        // $this->call(TransactionsSeeder::class);
+        // $this->call(RentalsSeeder::class);
+        // $this->call([
+        //     PemasukanSeeder::class,
+        //     PengeluaranSeeder::class,
+        //     LaporanKeuanganSeeder::class,
+        // ]);
 
         User::factory()->create([
             'name' => 'Test User',

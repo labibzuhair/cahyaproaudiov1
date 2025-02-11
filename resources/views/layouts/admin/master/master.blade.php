@@ -172,6 +172,17 @@ thead {
   top: 0;
   position: sticky;
 }
+
+/* event calender scroll */
+table td, table th {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* overflow: hidden; */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+
       </style>
 
 

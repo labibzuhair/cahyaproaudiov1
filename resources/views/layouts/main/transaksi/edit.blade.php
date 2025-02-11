@@ -63,9 +63,9 @@
                                                         <div class="small-calendar-container">
                                                             <div class="calendar">
                                                                 <div class="year-header">
-                                                                    <span class="left-button fa fa-chevron-left" id="prev"> </span>
+                                                                    <span class="left-button fa fa-chevron-left" style="margin-top: 13px;" id="prev"> </span>
                                                                     <span class="year" id="label"></span>
-                                                                    <span class="right-button fa fa-chevron-right" id="next"></span>
+                                                                    <span class="right-button fa fa-chevron-right" style="margin-top: 13px;" id="next"></span>
                                                                 </div>
                                                                 <table class="months-table w-100">
                                                                     <tbody>

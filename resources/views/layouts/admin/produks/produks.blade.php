@@ -39,7 +39,7 @@
                                 <div class="col-12">
                                   <div class="card">
                                     <div class="card-body p-0">
-                                      <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+                                      <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 600px">
 
                                         <table class="table table-bordered mb-0" id="dataTable">
                                           <thead style="background-color: #002d72;">
