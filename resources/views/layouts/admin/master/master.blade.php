@@ -174,7 +174,7 @@ thead {
 }
 
 /* event calender scroll */
-table td, table th {
+.table-calender td, table th {
     text-overflow: ellipsis;
     white-space: nowrap;
     /* overflow: hidden; */

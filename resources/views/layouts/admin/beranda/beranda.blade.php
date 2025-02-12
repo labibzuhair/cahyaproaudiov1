@@ -264,7 +264,7 @@
                                                 <span class="year" id="label"></span>
                                                 <span class="right-button fa fa-chevron-right" id="next"></span>
                                             </div>
-                                            <table class="months-table w-100">
+                                            <table class="months-table w-100 ">
                                                 <tbody>
                                                     <tr class="months-row">
                                                         <td class="month">Jan</td>

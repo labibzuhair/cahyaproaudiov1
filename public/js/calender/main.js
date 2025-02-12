@@ -467,7 +467,7 @@ function checkProductAvailability(date, rentals, selectedProductIds) {
         } else {
             var title = $("<div class='event-title' style='color: wheat; text-align: center;'   ><b>Terdapat Transaksi</b></div>");
             var transaction_details = $(
-                "<table class='transaction-details table table-striped' style='color: wheat; vertical-align: top;'>" +
+                "<table class='transaction-details table table-striped table-calender' style='color: wheat; vertical-align: top;'>" +
                     "<tr><th>Nama Order</th><td>:</td><td>" + (transaction.order_name || '') + "</td></tr>" +
                     "<tr><th>WhatsApp</th><td>:</td><td>" + (transaction.order_whatsapp || '') + "</td></tr>" +
                     "<tr><th>Alamat Pemasangan</th><td>:</td><td>" + (transaction.installation_address || '') + "</td></tr>" +
@@ -480,7 +480,7 @@ function checkProductAvailability(date, rentals, selectedProductIds) {
             rentals.forEach((rental) => {
                 var rental_card = $("<div class='event-card'></div>");
                 var rental_details = $(
-                    "<table class='rental-details'>" +
+                    "<table class='rental-details table-calender'>" +
                         "<tr><th>Produk</th><td>" + (rental.produk.name || '') + "</td></tr>" +
                         "<tr><th>Mulai Sewa</th><td>" + (rental.rental_date || '') + "</td></tr>" +
                         "<tr><th>Pengembalian</th><td>" + (rental.return_date || '') + "</td></tr>" +
