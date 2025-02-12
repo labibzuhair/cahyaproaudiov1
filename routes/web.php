@@ -19,6 +19,8 @@ use App\Http\Controllers\AdminNotificationController;
 // });
 
 Route::get('/', [BerandaController::class, 'beranda'])->name('beranda');
+Route::get('/fetch-transactions-customer', [CheckoutController::class, 'fetchTransactionsCustomer']);
+
 
 Route::get('/registration', [AuthController::class, 'registration_user'])->name('registration');
 Route::post('/registration_post', [AuthController::class, 'registration_post'])->name('registration_post');
@@ -101,7 +103,6 @@ Route::group(['middleware' => 'owner', 'as' => 'owner.'], function () {
 
 // Grup rute untuk customer
 Route::group(['middleware' => 'customer', 'as' => 'customer.'], function () {
-    Route::get('/fetch-transactions-customer', [CheckoutController::class, 'fetchTransactionsCustomer']);
 
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{produkId}', [CartController::class, 'add'])->name('cart.add');

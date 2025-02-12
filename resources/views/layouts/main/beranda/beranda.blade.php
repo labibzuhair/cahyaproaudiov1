@@ -70,6 +70,73 @@
             </div>
         </div>
     </section>
+
+            <!-- Content Column -->
+            <div class=" mb-4">
+
+                <!-- Project Card Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Jadwal Rental</h6>
+                    </div>
+                    <section class="ftco-section">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="content">
+                                        <div class="calendar-container">
+                                            <div class="calendar">
+                                                <div class="year-header">
+                                                    <span class="left-button fa fa-chevron-left" style="margin-top: 13px;" id="prev"> </span>
+                                                    <span class="year" id="label"></span>
+                                                    <span class="right-button fa fa-chevron-right" style="margin-top: 13px;" id="next"></span>
+                                                </div>
+                                                <table class="months-table w-100 ">
+                                                    <tbody>
+                                                        <tr class="months-row">
+                                                            <td class="month">Jan</td>
+                                                            <td class="month">Feb</td>
+                                                            <td class="month">Mar</td>
+                                                            <td class="month">Apr</td>
+                                                            <td class="month">May</td>
+                                                            <td class="month">Jun</td>
+                                                            <td class="month">Jul</td>
+                                                            <td class="month">Aug</td>
+                                                            <td class="month">Sep</td>
+                                                            <td class="month">Oct</td>
+                                                            <td class="month">Nov</td>
+                                                            <td class="month">Dec</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="days-table w-100">
+                                                    <td class="day">Min</td>
+                                                    <td class="day">Sen</td>
+                                                    <td class="day">Sel</td>
+                                                    <td class="day">Rab</td>
+                                                    <td class="day">Kam</td>
+                                                    <td class="day">Jum</td>
+                                                    <td class="day">Sab</td>
+                                                </table>
+                                                <div class="frame">
+                                                    <table class="dates-table w-100">
+                                                        <tbody class="tbody"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="events-container">
+
+                                            <!-- Detail rentals akan ditampilkan di sini -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
     <!-- Portfolio Grid-->
     <section class="page-section bg-light" id="portfolio">
         <div class="container">

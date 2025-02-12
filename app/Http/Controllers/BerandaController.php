@@ -27,6 +27,8 @@ class BerandaController extends Controller
         $query = Produk::query();
 
         $data['produks'] = $query->get();
+        $rentals = Rentals::with('produk', 'transaction.user')->get();
+        $data['rentals'] = $rentals;
 
         return view('layouts.main.beranda.beranda', $data);
     }

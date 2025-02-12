@@ -358,6 +358,7 @@ function checkProductAvailability(date, rentals, selectedProductIds) {
 }
 
 
+
     function highlight_rentals(transactions) {
         const colors = ["rental-date-a", "rental-date-b", "rental-date-c"];
 
@@ -422,8 +423,8 @@ function checkProductAvailability(date, rentals, selectedProductIds) {
             "click",
             ".table-date.rental-date-a, .table-date.rental-date-b, .table-date.rental-date-c",
             function () {
-                var transaction = JSON.parse($(this).attr("data-transaction"));
-                show_events(transaction.rentals);
+                var transaction = $(this).data("transaction");
+                show_events(transaction.rentals, transaction);
             }
         );
 
@@ -444,7 +445,6 @@ function checkProductAvailability(date, rentals, selectedProductIds) {
                     $("#rental_date").val("").attr("placeholder", placeholderMessage);
                 } else {
                     $("#rental_date").val(selectedDate).attr("placeholder", "Tanggal Rental");
-
                 }
             });
         }
@@ -453,64 +453,52 @@ function checkProductAvailability(date, rentals, selectedProductIds) {
 
 
 
-    function show_events(rentals, month, day) {
+    function show_events(rentals, transaction) {
         $(".events-container").empty();
         $(".events-container").show(250);
-        if (rentals.length === 0) {
+        if (!transaction || rentals.length === 0) {
             var rental_card = $("<div class='event-card'></div>");
             var rental_name = $(
-                "<div class='event-name'>Tidak ada persewaan yang direncanakan untuk " +
-                    month +
-                    " " +
-                    day +
-                    ".</div>"
+                "<div class='event-name'>Tidak ada persewaan yang direncanakan.</div>"
             );
             $(rental_card).css({ "border-left": "10px solid #32CD32" });
             $(rental_card).append(rental_name);
             $(".events-container").append(rental_card);
         } else {
-            for (var i = 0; i < rentals.length; i++) {
+            var title = $("<div class='event-title' style='color: wheat; text-align: center;'   ><b>Terdapat Transaksi</b></div>");
+            var transaction_details = $(
+                "<table class='transaction-details table table-calender' style='color: wheat; vertical-align: top;'>" +
+                    "<tr><th>Nama Order</th><td>:</td><td>" + (transaction.order_name || '') + "</td></tr>" +
+                    "<tr><th>WhatsApp</th><td>:</td><td>" + (transaction.order_whatsapp || '') + "</td></tr>" +
+                    "<tr><th>Alamat Pemasangan</th><td>:</td><td>" + (transaction.installation_address || '') + "</td></tr>" +
+                    "<tr><th>Status</th><td>:</td><td>" + (transaction.status || '') + "</td></tr>" +
+                    "</table>"
+            );
+            $(".events-container").append(title);
+            $(".events-container").append(transaction_details);
+
+            rentals.forEach((rental) => {
                 var rental_card = $("<div class='event-card'></div>");
                 var rental_details = $(
-                    "<table class='rental-details'>" +
-                        "<tr><th>Mulai Sewa</th><td>" +
-                        rentals[i]["rental_date"] +
-                        "</td></tr>" +
-                        "<tr><th>Pengembalian</th><td>" +
-                        rentals[i]["return_date"] +
-                        "</td></tr>" +
-                        "<tr><th>Nama Order</th><td>" +
-                        rentals[i]["order_name"] +
-                        "</td></tr>" +
-                        "<tr><th>WhatsApp</th><td>" +
-                        rentals[i]["order_whatsapp"] +
-                        "</td></tr>" +
-                        "<tr><th>Alamat Pemasangan</th><td>" +
-                        rentals[i]["installation_address"] +
-                        "</td></tr>" +
-                        "<tr><th>Status</th><td>" +
-                        rentals[i]["status"] +
-                        "</td></tr>" +
+                    "<table class='rental-details table-calender'>" +
+                        "<tr><th>Produk</th><td>" + (rental.produk.name || '') + "</td></tr>" +
+                        "<tr><th>Mulai Sewa</th><td>" + (rental.rental_date || '') + "</td></tr>" +
+                        "<tr><th>Pengembalian</th><td>" + (rental.return_date || '') + "</td></tr>" +
                         "</table>"
                 );
 
                 // Tambahkan atribut data-id dan event click untuk menuju ke halaman transaksi
                 $(rental_card)
-                    .attr("data-id", rentals[i]["transaction_id"])
+                    .attr("data-id", rental.transaction_id)
                     .css({ "border-left": "10px solid #32CD32" })
                     .append(rental_details)
-                    .click(function () {
-                        var transactionId = $(this).data("id");
 
-                        // Navigasi ke halaman transaksi
-                        window.location.href =
-                            "/admin/transactions/" + transactionId;
-                    });
 
                 $(".events-container").append(rental_card);
-            }
+            });
         }
     }
+
 
     $(document).on("click", ".table-date.rental-date", function () {
         var transaction = JSON.parse($(this).attr("data-transaction"));
